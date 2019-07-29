@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import com.mypractice.hrms.util.CommonUtils;
-
 /**
  * @author Nasruddin Khan 
  * 29-May-2019 - 12:56:38 am
