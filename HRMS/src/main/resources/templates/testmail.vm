@@ -1,0 +1,11 @@
+<html>
+ 
+<head></head>
+ 
+<body>
+    <p>Dear <b>${name}</b>,</p>
+    <p>You have been Successfully register</b></p>
+    <p>Thanks</p>
+</body>
+ 
+</html>
