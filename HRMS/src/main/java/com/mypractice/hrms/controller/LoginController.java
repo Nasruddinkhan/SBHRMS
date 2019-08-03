@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiParam;
  */
  @CrossOrigin(origins = { "*" })  
  @RestController
- @RequestMapping("/login")
+ @RequestMapping("/hrms/api/")
 public class LoginController {
 
 		protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -33,7 +33,7 @@ public class LoginController {
 		@Autowired
 		JwtGenerator jwtGenerator;
 		
-		@PostMapping(value = "/validateUser")
+		@PostMapping(value = "login/validateUser")
 		@ApiOperation(value = "LoginBO Bo.", notes = "validate the login user.")
 		public  ResponseEntity<?> validate(@ApiParam(value = "LoginBO Bo is required", required = true)@RequestBody LoginBO loginBO) {
 			

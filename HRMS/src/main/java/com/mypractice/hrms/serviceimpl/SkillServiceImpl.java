@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import com.mypractice.hrms.service.SkillService;
 @Service("skillService")
 @Transactional
 public class SkillServiceImpl implements SkillService {
+	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private SkillRepository skillRepository=null;
 	

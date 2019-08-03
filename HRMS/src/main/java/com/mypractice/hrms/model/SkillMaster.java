@@ -1,7 +1,6 @@
 package com.mypractice.hrms.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -36,9 +35,8 @@ public class SkillMaster extends BaseBean implements Serializable{
 	private String  skillName;
 	@Column(name="ORDER_LEVEL",  nullable = false)
 	private Integer orderlevl;
-	@JsonIgnore
 	@OneToMany(mappedBy = "skillMst")
-	private List<SkillElementMaster> skillEleItems = new ArrayList<SkillElementMaster>();
+	private List<SkillElementMaster> skillEleItems ;
 	
 	public List<SkillElementMaster> getSkillEleItems() {
 		return skillEleItems;

@@ -6,9 +6,6 @@
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
-
-import com.mypractice.hrms.bean.ResponseMessage;
 import com.mypractice.hrms.model.SkillMaster;
 
 /**

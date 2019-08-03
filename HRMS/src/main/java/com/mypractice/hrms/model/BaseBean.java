@@ -44,7 +44,7 @@ public class BaseBean {
 		return modifiedDate;
 	}
 	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+		this.modifiedDate = modifiedDate; 
 	}
 	public String getModifiedBy() {
 		return modifiedBy;

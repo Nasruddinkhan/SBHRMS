@@ -58,7 +58,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter{
     	
     	http.csrf().disable()
     	.authorizeRequests().antMatchers("**/hrms/api/**").authenticated()
-    	.and().antMatcher("/v2/api-docs")
+    	.and()
     	.exceptionHandling().authenticationEntryPoint(entryPoint)
     	.and()
     	.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -21,7 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@ComponentScan("com.mypractice.hrms.config")
+@ComponentScan("com.mypractice.hrms.model")
 public class SwaggerConfig {
 	@Bean
     public Docket api() {
