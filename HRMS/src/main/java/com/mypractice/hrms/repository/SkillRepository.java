@@ -31,6 +31,8 @@ public interface SkillRepository extends JpaRepository<SkillMaster, Integer> {
 	@Query("Update SkillMaster set activeStatus = 0 where skillID =:SKILLID")
 	Integer deleteSkill(@Param("SKILLID") Integer skillId);
 	
+	@Query("select skillID as ID, skillName as code  from SkillMaster")
+	List<CommonDropdown> getSkills();
 	
 }
 

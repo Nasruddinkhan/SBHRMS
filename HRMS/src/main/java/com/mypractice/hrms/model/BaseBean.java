@@ -31,31 +31,32 @@ public class BaseBean {
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(LocalDateTime createdDate) {
-		this.createdDate = createdDate;
-	}
 	public String getCreatedBy() {
 		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
 	}
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate; 
-	}
 	public String getModifiedBy() {
 		return modifiedBy;
-	}
-	public void setModifiedBy(String modifiedBy) {
-		this.modifiedBy = modifiedBy;
 	}
 	public Integer getActiveStatus() {
 		return activeStatus;
 	}
+	public void setCreatedDate(LocalDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 	public void setActiveStatus(Integer activeStatus) {
 		this.activeStatus = activeStatus;
 	}
+
 }

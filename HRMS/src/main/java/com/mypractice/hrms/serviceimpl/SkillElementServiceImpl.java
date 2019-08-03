@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mypractice.hrms.model.SkillElementMaster;
+import com.mypractice.hrms.repository.SkillElelentsDetails;
 import com.mypractice.hrms.repository.SkillElementRepo;
 import com.mypractice.hrms.service.SkillElementService;
 
@@ -48,6 +49,11 @@ public class SkillElementServiceImpl implements SkillElementService {
 	public Optional<SkillElementMaster> findOne(Integer skillEleId) {
 		// TODO Auto-generated method stub
 		return skillElementsRepo.findById(skillEleId);
+	}
+	@Override
+	public List<SkillElelentsDetails> findAllSkillElelentsDetails() {
+		// TODO Auto-generated method stub
+		return skillElementsRepo.getSkillElementsDetails();
 	}
 }
 

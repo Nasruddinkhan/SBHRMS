@@ -49,31 +49,32 @@ public class SkillElementMaster extends BaseBean  implements Serializable{
 	private SkillMaster skillMst;
 	@Column(name="ORDER_LEVEL",  nullable = false)
 	private Integer orderlevl;
-	
-	public SkillMaster getSkillMst() {
-		return skillMst;
-	}
-	public void setSkillMst(SkillMaster skillMst) {
-		this.skillMst = skillMst;
-	}
-	public Integer getOrderlevl() {
-		return orderlevl;
-	}
-	public void setOrderlevl(Integer orderlevl) {
-		this.orderlevl = orderlevl;
-	}
 	public Integer getSkillElementID() {
 		return skillElementID;
-	}
-	public void setSkillElementID(Integer skillElementID) {
-		this.skillElementID = skillElementID;
 	}
 	public String getSkillElementName() {
 		return skillElementName;
 	}
+	public SkillMaster getSkillMst() {
+		return skillMst;
+	}
+	public Integer getOrderlevl() {
+		return orderlevl;
+	}
+	public void setSkillElementID(Integer skillElementID) {
+		this.skillElementID = skillElementID;
+	}
 	public void setSkillElementName(String skillElementName) {
 		this.skillElementName = skillElementName;
 	}
+	public void setSkillMst(SkillMaster skillMst) {
+		this.skillMst = skillMst;
+	}
+	public void setOrderlevl(Integer orderlevl) {
+		this.orderlevl = orderlevl;
+	}
+	
+
 }
 
  

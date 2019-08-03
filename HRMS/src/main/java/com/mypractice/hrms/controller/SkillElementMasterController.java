@@ -29,6 +29,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.SkillElementMaster;
 import com.mypractice.hrms.model.SkillMaster;
+import com.mypractice.hrms.repository.CommonDropdown;
+import com.mypractice.hrms.repository.SkillElelentsDetails;
 import com.mypractice.hrms.service.SkillElementService;
 import com.mypractice.hrms.service.SkillService;
 
@@ -72,7 +74,7 @@ public class SkillElementMasterController {
 		return sklmst;
 	}
 	@ApiOperation(value = "delete  Skill elements Details.", notes = "Returns the  ResponseMessage  in body.")
-	@DeleteMapping("/skillmaster/{skillementID}/deleteskillelements")
+	@DeleteMapping("/skillelement/{skillementID}/deleteskillelements")
 	public void deleteSkillElements(@PathVariable("skillementID") Integer skillEleId) {
 		Optional<SkillElementMaster> skillElementsmaster = skillElementService.findOne(skillEleId);
 		if (!skillElementsmaster.isPresent()) {
@@ -94,6 +96,25 @@ public class SkillElementMasterController {
 		ControllerLinkBuilder links= linkTo(methodOn(this.getClass()).findAllSkillElements());
 		resource.add(links.withRel("all-skillelements"));
 		return resource;
+	}
+	
+	@ApiOperation(value = "areturns skills.", notes = "Returns the  ResponseMessage  in body.")
+	@GetMapping("/skillelement/getskills")
+	public List<CommonDropdown> findAllSkills(){
+		List<CommonDropdown> sklmst = skillService.findAllSkills();
+		if (sklmst.isEmpty()) {
+			throw new ResourceNotFoundException("Record Not Found");
+		}
+		return sklmst;
+	}
+	@ApiOperation(value = "returns skill elelemts skills.", notes = "Returns the  ResponseMessage  in body.")
+	@GetMapping("/skillelement/getskillelementsdetails")
+	public List<SkillElelentsDetails> findAllSkillElelentsDetails(){
+		List<SkillElelentsDetails> sklmst = skillElementService.findAllSkillElelentsDetails();
+		if (sklmst.isEmpty()) {
+			throw new ResourceNotFoundException("Record Not Found");
+		}
+		return sklmst;
 	}
 }
 

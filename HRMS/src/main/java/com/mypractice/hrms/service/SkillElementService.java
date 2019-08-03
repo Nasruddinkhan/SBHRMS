@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mypractice.hrms.model.SkillElementMaster;
+import com.mypractice.hrms.repository.SkillElelentsDetails;
 
 /**
  * @author Nasruddin Khan 
@@ -37,6 +38,11 @@ public interface SkillElementService {
 	 * @return
 	 */
 	Optional<SkillElementMaster> findOne(Integer skillEleId);
+
+	/**
+	 * @return
+	 */
+	List<SkillElelentsDetails> findAllSkillElelentsDetails();
 
 }
 

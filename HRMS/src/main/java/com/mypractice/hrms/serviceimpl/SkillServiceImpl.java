@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mypractice.hrms.model.SkillMaster;
+import com.mypractice.hrms.repository.CommonDropdown;
 import com.mypractice.hrms.repository.SkillRepository;
 import com.mypractice.hrms.service.SkillService;
 
@@ -49,6 +50,11 @@ public class SkillServiceImpl implements SkillService {
 	public void deleteSkill(SkillMaster sklMst) {
 		// TODO Auto-generated method stub
 		skillRepository.delete(sklMst);
+	}
+	@Override
+	public List<CommonDropdown> findAllSkills() {
+		// TODO Auto-generated method stub
+		return skillRepository.getSkills();
 	}
 }
 

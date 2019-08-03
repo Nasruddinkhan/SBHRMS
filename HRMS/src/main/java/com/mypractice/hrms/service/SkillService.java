@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mypractice.hrms.model.SkillMaster;
+import com.mypractice.hrms.repository.CommonDropdown;
 
 /**
  * @author Nasruddin Khan 
@@ -36,6 +37,11 @@ public interface SkillService {
 	 * @param sklMst
 	 */
 	void deleteSkill(SkillMaster sklMst);
+
+	/**
+	 * @return
+	 */
+	List<CommonDropdown> findAllSkills();
 
 }
 
