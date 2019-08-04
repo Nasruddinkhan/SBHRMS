@@ -73,6 +73,11 @@ public class SkillElementMaster extends BaseBean  implements Serializable{
 	public void setOrderlevl(Integer orderlevl) {
 		this.orderlevl = orderlevl;
 	}
+	@Override
+	public String toString() {
+		return "SkillElementMaster [skillElementID=" + skillElementID + ", skillElementName=" + skillElementName
+				+ ", skillMst=" + skillMst + ", orderlevl=" + orderlevl + "]";
+	}
 	
 
 }

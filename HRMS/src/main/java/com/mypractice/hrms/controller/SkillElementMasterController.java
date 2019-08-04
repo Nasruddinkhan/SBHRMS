@@ -54,6 +54,8 @@ public class SkillElementMasterController {
 	@ApiOperation(value = "add new new Skill elemrnt manster.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("/skillelement/{skillID}/savesubskills")
 	public ResponseEntity<?> saveSkillElementDetails(@PathVariable("skillID") Integer skillId,  @RequestBody SkillElementMaster skillelementMaster) {
+		System.out.println(skillelementMaster);
+		System.out.println(skillId);
 		Optional<SkillMaster> skills = skillService.findOne(skillId);
 		if(!skills.isPresent())
 			throw new ResourceNotFoundException("skill is not found ="+skillId);
