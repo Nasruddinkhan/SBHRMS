@@ -13,8 +13,6 @@ import com.mypractice.hrms.util.MailApiUtils;
  */
 @SpringBootApplication
 public class HRMSApplication {
-	
-	
 	public static void main(String[] args) {
 		SpringApplication.run(HRMSApplication.class, args);
 	}
