@@ -3,8 +3,10 @@ package com.mypractice.hrms.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.mypractice.hrms.util.CommonUtils;
 
 import io.swagger.annotations.ApiModel;
@@ -35,7 +39,8 @@ public class SkillMaster extends BaseBean implements Serializable{
 	private String  skillName;
 	@Column(name="ORDER_LEVEL",  nullable = false)
 	private Integer orderlevl;
-	@OneToMany(mappedBy = "skillMst")
+	@OneToMany(mappedBy = "skillMst", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<SkillElementMaster> skillEleItems ;
 	
 	public List<SkillElementMaster> getSkillEleItems() {

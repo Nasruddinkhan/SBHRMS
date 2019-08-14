@@ -7,6 +7,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mypractice.hrms.exception.ResourceNotFoundException;
+import com.mypractice.hrms.model.SkillElementMaster;
 import com.mypractice.hrms.model.SkillMaster;
 import com.mypractice.hrms.service.SkillService;
 
@@ -47,6 +49,7 @@ public class SkillMasterController {
 	@ApiOperation(value = "add new Skill Details.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("/skillmaster/saveskill")
 	public ResponseEntity<Object> saveSkillDetails(@RequestBody SkillMaster skillMaster) {
+		System.out.println(skillMaster);
 		skillMaster = skillService.saveNewkill(skillMaster);
 		URI UriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{skillID}")
 				.buildAndExpand(skillMaster.getSkillID()).toUri();
