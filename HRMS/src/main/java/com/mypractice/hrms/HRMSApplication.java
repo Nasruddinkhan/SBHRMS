@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import com.mypractice.hrms.util.MailApiUtils;
 /**
  * @author Nasruddin khan
- *
+ *Test
  */
 @SpringBootApplication
 public class HRMSApplication {
