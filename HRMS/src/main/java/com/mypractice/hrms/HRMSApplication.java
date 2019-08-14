@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.mypractice.hrms.util.MailApiUtils;
-
 /**
  * @author Nasruddin khan
  *
