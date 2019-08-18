@@ -10,6 +10,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class SkillElementMasterController {
     	
 	@ApiOperation(value = "add new new Skill elemrnt manster.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("/skillelement/{skillID}/savesubskills")
-	public ResponseEntity<?> saveSkillElementDetails(@PathVariable("skillID") Integer skillId,  @RequestBody SkillElementMaster skillelementMaster) {
+	public ResponseEntity<?> saveSkillElementDetails(@Valid @RequestBody SkillElementMaster skillelementMaster, @PathVariable("skillID") Integer skillId) {
 		System.out.println(skillelementMaster);
 		System.out.println(skillId);
 		Optional<SkillMaster> skills = skillService.findOne(skillId);

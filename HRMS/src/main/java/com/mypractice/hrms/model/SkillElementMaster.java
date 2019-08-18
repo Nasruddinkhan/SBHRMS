@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mypractice.hrms.util.CommonUtils;
@@ -41,12 +43,14 @@ public class SkillElementMaster extends BaseBean  implements Serializable{
 	@Column(name="SKILL_ELEMENT_ID",  nullable = false)
 	private Integer skillElementID;
 	@ApiModelProperty(notes = "cannnot be empty and maximum five length is required")
+	@NotBlank(message = "skillElementName is mandatory")
 	@Column(name ="SKILL_ELEMENT_NAME", columnDefinition = CommonUtils.VARCHAR_100)
 	private String skillElementName;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SKILL_ID" , foreignKey = @ForeignKey(name="FK_SKILL_ID_SKL_ELE_MENT"))
 	@JsonIgnore
 	private SkillMaster skillMst;
+	@NotNull(message = "order level is mandatory")
 	@Column(name="ORDER_LEVEL",  nullable = false)
 	private Integer orderlevl;
 	public Integer getSkillElementID() {
