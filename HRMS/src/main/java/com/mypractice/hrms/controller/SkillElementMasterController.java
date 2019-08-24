@@ -43,7 +43,6 @@ import io.swagger.annotations.ApiOperation;
  * 07-Jun-2019 - 4:12:17 pm
  * SkillElementMasterController.java
  */
-@CrossOrigin(origins = { "*" })  
 @RestController
 @RequestMapping("/hrms/api/")
 public class SkillElementMasterController {
