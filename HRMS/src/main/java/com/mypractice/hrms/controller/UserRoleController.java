@@ -10,6 +10,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -35,12 +37,12 @@ import io.swagger.annotations.ApiOperation;
  */
  @RestController
  @RequestMapping("/hrms/api/")
-  public class UserRoleController {
+ public class UserRoleController {
 	 @Autowired
 	 private UserRoleService userRoleService;
 	 @ApiOperation(value = "add new role Details.", notes = "Returns the  ResponseMessage  in body.")
 	 @PostMapping("role/add")
-	 public ResponseEntity<Object> saveSkillDetails(@RequestBody UserRole userRole) {
+	 public ResponseEntity<Object> saveSkillDetails(@Valid @RequestBody UserRole userRole) {
 		 UserRole usRole = userRoleService.saveUserRole(userRole);
 		 URI UriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{roleID}")
 				 .buildAndExpand(usRole.getRoleID()).toUri();
@@ -62,21 +64,18 @@ import io.swagger.annotations.ApiOperation;
 			 throw new ResourceNotFoundException("Role is not found");
 		 return roles;
 	 }
-	 
-
-		@ApiOperation(value = "add new Skill Details.", notes = "Returns the  ResponseMessage  in body.")
-		@GetMapping("/role/{roleID}/roleid")
-		public Resource<UserRole> getRole(@PathVariable Integer roleID) {
-			Optional<UserRole> userRole = userRoleService.findOne(roleID);
-			if (!userRole.isPresent()) {
-				throw new RuntimeException("role is not found" + roleID);
-			}
-			Resource<UserRole> userRoles= new Resource<UserRole>(userRole.get());
-			ControllerLinkBuilder links= linkTo(methodOn(this.getClass()).findAll());
-			userRoles.add(links.withRel("all-roles"));
-			return userRoles;
-		}
-
+	 @ApiOperation(value = "add new Skill Details.", notes = "Returns the  ResponseMessage  in body.")
+	 @GetMapping("/role/{roleID}/roleid")
+	 public Resource<UserRole> getRole(@PathVariable Integer roleID) {
+		 Optional<UserRole> userRole = userRoleService.findOne(roleID);
+		 if (!userRole.isPresent()) {
+			 throw new RuntimeException("role is not found" + roleID);
+		 }
+		 Resource<UserRole> userRoles= new Resource<UserRole>(userRole.get());
+		 ControllerLinkBuilder links= linkTo(methodOn(this.getClass()).findAll());
+		 userRoles.add(links.withRel("all-roles"));
+		 return userRoles;
+	 }
 }
 
  

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.mypractice.hrms.util.CommonUtils;
 
@@ -30,8 +31,9 @@ final public class UserRole extends BaseBean  implements Serializable {
 	@Id
 	@Column(name = "ROLE_ID")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_master")
-	@SequenceGenerator(name="role_master", sequenceName = "role_seq", allocationSize=1,initialValue = 1)
+	@SequenceGenerator(name="role_master", sequenceName = "role_seq", allocationSize=1,initialValue = 2000)
 	private Integer roleID;
+	@NotBlank(message = "role name is mandatory")
 	@Column(name = "ROLE_NAME", columnDefinition = CommonUtils.VARCHAR_20)
 	private String roleName;
 	public Integer getRoleID() {

@@ -15,15 +15,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * JwtGenerator.java
  */
  @Component
-public class JwtGenerator {
-	    public String generate(LoginBO loginBo) {
-	        Claims claims = Jwts.claims()
-	                .setSubject(loginBo.getUsername());
-	        return Jwts.builder()
-	                .setClaims(claims)
-	                .signWith(SignatureAlgorithm.HS512, "hrms@practice")
-	                .compact();
-	    }
+ public class JwtGenerator {
+	 public String generate(LoginBO loginBo) {
+		 Claims claims = Jwts.claims()
+				 .setSubject(loginBo.getUsername());
+		 return Jwts.builder()
+				 .setClaims(claims)
+				 .signWith(SignatureAlgorithm.HS512, "hrms@practice")
+				 .compact();
+	 }
 }
 
  
