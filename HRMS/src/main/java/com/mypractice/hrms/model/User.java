@@ -8,15 +8,18 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 import com.mypractice.hrms.util.CommonUtils;
 
 import io.swagger.annotations.ApiModel;
@@ -41,10 +44,14 @@ public final class User implements Serializable {
 	@SequenceGenerator(name="user_master", sequenceName = "user_seq", allocationSize=1,initialValue = 50)
 	private Integer userID;
 
+	
+	@OneToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "STATUS_ID", foreignKey = @ForeignKey(name="FK_STATUS_ID"))
+    private StatusMaster statusMaster;
+	
 	@Column(name = "FIRST_NAME", columnDefinition = CommonUtils.VARCHAR_50)
 	private String firstName;
 
-	@NotEmpty(message = "first name cannot be empty")
 	@Column(name = "LAST_NAME", columnDefinition = CommonUtils.VARCHAR_30)
 	private String lastName;
 
@@ -83,15 +90,18 @@ public final class User implements Serializable {
 
 	@Transient
 	private String confPassword;
+	
+	@Column(name = "USER_TYPE",  columnDefinition = CommonUtils.VARCHAR_15)
+	private String userType;
 
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public User(Integer userID, String firstName, @NotEmpty(message = "first name cannot be empty") String lastName,
+	public User(Integer userID, String firstName,  String lastName,
 			String fatherName, String gender, Date dob, String maritialStatus, Date doj, String email, String contactNo,
-			String gurdianContactNo, String aadhaarDetails, String panCard, String password, String confPassword) {
+			String gurdianContactNo, String aadhaarDetails, String panCard, String password, String confPassword,
+			String userType) {
 		super();
 		this.userID = userID;
 		this.firstName = firstName;
@@ -108,6 +118,23 @@ public final class User implements Serializable {
 		this.panCard = panCard;
 		this.password = password;
 		this.confPassword = confPassword;
+		this.userType = userType;
+	}
+	public String getUserType() {
+		return userType;
+	}
+
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+
+	public StatusMaster getStatusMaster() {
+		return statusMaster;
+	}
+	public void setStatusMaster(StatusMaster statusMaster) {
+		this.statusMaster = statusMaster;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -192,6 +219,14 @@ public final class User implements Serializable {
 	}
 	public void setConfPassword(String confPassword) {
 		this.confPassword = confPassword;
+	}
+
+	public Integer getUserID() {
+		return userID;
+	}
+
+	public void setUserID(Integer userID) {
+		this.userID = userID;
 	}
 
 	@Override

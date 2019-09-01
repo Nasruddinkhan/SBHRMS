@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name = "SKILL_MASTER")
 @ApiModel(description = "All skill elements details")
-public class SkillMaster extends BaseBean implements Serializable{
+public final class SkillMaster extends BaseBean implements Serializable{
 	/**
 	 * 
 	 */

@@ -19,7 +19,7 @@ public class MailModel {
 	private String ccMail;
 	private Object obj;
 	private String subject;
-	private String templateName;
+	private String template;
 	private File[] attachment;
 	/**
 	 * @return the fromMail
@@ -81,17 +81,12 @@ public class MailModel {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	/**
-	 * @return the templateName
-	 */
-	public String getTemplateName() {
-		return templateName;
+	
+	public String getTemplate() {
+		return template;
 	}
-	/**
-	 * @param templateName the templateName to set
-	 */
-	public void setTemplateName(String templateName) {
-		this.templateName = templateName;
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 	/**
 	 * @return the attachment

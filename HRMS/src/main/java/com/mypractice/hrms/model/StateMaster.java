@@ -17,9 +17,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(description="All state detals")
-@Table(name="STATE_MST")
+@Table(name="STATE_MASTER")
 @Entity
-public class StateMaster extends BaseBean implements Serializable {
+public final class StateMaster extends BaseBean implements Serializable {
 	/**
 	 * 
 	 */
