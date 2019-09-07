@@ -18,7 +18,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotEmpty;
 
 import com.mypractice.hrms.util.CommonUtils;
 
@@ -94,6 +93,8 @@ public final class User implements Serializable {
 	@Column(name = "USER_TYPE",  columnDefinition = CommonUtils.VARCHAR_15)
 	private String userType;
 
+	@Column(name = "IS_PERSONAL_FLAG", columnDefinition = CommonUtils.CHAR_01_DFLT)
+	private String isPersonalFlag;
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -3,6 +3,8 @@
  */
  package com.mypractice.hrms.bean;
 
+import com.mypractice.hrms.model.User;
+
 /**
  * @author Nasruddin Khan 
  * 29-May-2019 - 1:40:03 am
@@ -12,6 +14,14 @@ public class ResponseMessage {
 	private Integer errorCode;
 	private String errorMessage;
 	private String token;
+	private User user;
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public Integer getErrorCode() {
 		return errorCode;
 	}
