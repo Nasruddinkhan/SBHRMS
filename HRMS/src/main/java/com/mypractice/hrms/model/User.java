@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mypractice.hrms.util.CommonUtils;
 
 import io.swagger.annotations.ApiModel;
@@ -87,6 +88,7 @@ public final class User implements Serializable {
 	@Column(name = "PASSWORD", columnDefinition = CommonUtils.VARCHAR_20 )
 	private String password;
 
+	@JsonIgnoreProperties
 	@Transient
 	private String confPassword;
 	
