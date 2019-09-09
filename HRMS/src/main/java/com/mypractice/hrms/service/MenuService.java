@@ -4,6 +4,7 @@
  package com.mypractice.hrms.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -27,6 +28,17 @@ public interface MenuService {
 	 * @return
 	 */
 	List<Menus> findAll();
+
+	/**
+	 * @param menuID
+	 * @return
+	 */
+	Optional<Menus> findOne(Integer menuID);
+
+	/**
+	 * @param menus
+	 */
+	void deleteMenu(Menus menus);
 
 }
 

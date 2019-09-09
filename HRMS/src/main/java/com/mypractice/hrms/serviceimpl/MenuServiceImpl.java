@@ -4,6 +4,7 @@
  package com.mypractice.hrms.serviceimpl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,16 @@ private MenuRepo menuRepo;
 	public List<Menus> findAll() {
 		// TODO Auto-generated method stub
 		return menuRepo.findAll();
+	}
+	@Override
+	public Optional<Menus> findOne(Integer menuID) {
+		// TODO Auto-generated method stub
+		return menuRepo.findById(menuID);
+	}
+	@Override
+	public void deleteMenu(Menus menus) {
+		// TODO Auto-generated method stub
+		menuRepo.delete(menus);
 	}
 
 }
