@@ -50,7 +50,7 @@ public class EmailServiceImpl implements EmailService {
 				mailObject.setFromMail(obj.getEmailTemplates().getFromID());
 				mailObject.setSubject(obj.getEmailTemplates().getSubjects());
 				mailObject.setTemplate(obj.getEmailTemplates().getTemplateName());
-				if(mailApiUils.sendEmail(obj.getEmailTemplates().getTemplateName(), mailObject)) 
+				if(mailApiUils.sendEmail(mailObject)) 
 					list.add(obj.getEmailHistory());
 			} catch (Exception e) {
 				e.printStackTrace();

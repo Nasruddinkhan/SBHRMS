@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.Menus;
 import com.mypractice.hrms.model.SubMenus;
 import com.mypractice.hrms.service.MenuService;
+import com.mypractice.hrms.service.SubMenuDetails;
 import com.mypractice.hrms.service.SubMenuService;
 
 import io.swagger.annotations.ApiOperation;
@@ -49,7 +51,15 @@ public final class SubMenuController {
 	}
 	@ApiOperation(value = "add new sub menu manster.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/submenu/submenus")
-	public List<SubMenus> findAll(){
+	public List<SubMenuDetails> findAll(){
 		return subMenuService.findAll();
+	}
+	
+	@ApiOperation(value = "add new sub menu manster.", notes = "Returns the  ResponseMessage  in body.")
+	@DeleteMapping("/submenu/{subMenuId}/delete")
+	public void deleteSubMenu(@PathVariable String subMenuId){
+		String submenID = subMenuId.replaceAll("-","/");
+		System.out.println(submenID);
+		subMenuService.deleteSubMenu(submenID);
 	}
 }

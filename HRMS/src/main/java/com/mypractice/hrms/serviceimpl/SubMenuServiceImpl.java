@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.SubMenus;
 import com.mypractice.hrms.repository.SubMenuRepo;
+import com.mypractice.hrms.service.SubMenuDetails;
 import com.mypractice.hrms.service.SubMenuService;
 
 /**
@@ -29,9 +31,21 @@ private SubMenuRepo subMenuRepo;
 		return subMenuRepo.save(subMenus);
 	}
 	@Override
-	public List<SubMenus> findAll() {
+	public List<SubMenuDetails> findAll() {
 		// TODO Auto-generated method stub
-		return subMenuRepo.findAll();
+		return subMenuRepo.getSubMenuDetails();
+	}
+	@Override
+	public SubMenus findOne(String subMenuID) {
+		// TODO Auto-generated method stub
+		return subMenuRepo.findById(subMenuID).orElseThrow(()->new ResourceNotFoundException(subMenuID+" sub menu id is not found"));
+		
+	}
+	@Override
+	public void deleteSubMenu(String submenu) {
+		// TODO Auto-generated method stub
+		Integer row = subMenuRepo.deleteSubmenu(submenu);
+		System.out.println("row ["+row+"]");
 	}
 
 }

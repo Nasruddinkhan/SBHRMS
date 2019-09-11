@@ -37,7 +37,7 @@ public final class SubMenus extends BaseBean implements Serializable {
 	private String subMenuName;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MENU_ID" , foreignKey = @ForeignKey(name="FK_MENU_ID"))
-	@JsonIgnore
+	@JsonIgnore 
 	private Menus menu;
 	public String getSubMenuId() {
 		return subMenuId;
@@ -57,4 +57,10 @@ public final class SubMenus extends BaseBean implements Serializable {
 	public void setSubMenuName(String subMenuName) {
 		this.subMenuName = subMenuName;
 	}
+	@Override
+	public String toString() {
+		return "SubMenus [subMenuId=" + subMenuId + ", subMenuName=" + subMenuName + ", menu=" + menu + "]";
+	}
+	
+	
 }

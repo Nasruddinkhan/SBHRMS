@@ -23,7 +23,18 @@ public interface SubMenuService {
 	/**
 	 * @return
 	 */
-	List<SubMenus> findAll();
+	List<SubMenuDetails> findAll();
+
+	/**
+	 * @param subMenuID
+	 * @return
+	 */
+	SubMenus findOne(String subMenuID);
+
+	/**
+	 * @param submenID
+	 */
+	void deleteSubMenu(String submenID);
 
 }
 

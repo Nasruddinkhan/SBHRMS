@@ -51,7 +51,7 @@ public class MailApiUtils {
 	 * @param obj
 	 * @throws Exception 
 	 */
-	public boolean sendEmail(String type, MailModel obj) throws Exception {
+	public boolean sendEmail( MailModel obj) throws Exception {
 		logger.info("enter sendEmail()");
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		boolean isError = false;  
@@ -69,7 +69,7 @@ public class MailApiUtils {
 				}
 			}
 			logger.info("calling geContentFromTemplate()");
-			String template=geContentFromTemplate(type, obj);
+			String template=geContentFromTemplate( obj);
 			Optional.ofNullable(template).orElseThrow(() -> new Exception(
 					"Unsupported value :template data coming empty " + template));
 			mimeMessageHelper.setText(template, true);
@@ -90,7 +90,7 @@ public class MailApiUtils {
 	 * @param obj
 	 * @return
 	 */
-	public String geContentFromTemplate(String type, MailModel obj) {
+	public String geContentFromTemplate( MailModel obj) {
 		logger.info("processing geContentFromTemplate function ");
 		try {
 			//MailModel model = (MailModel) obj;
@@ -101,7 +101,7 @@ public class MailApiUtils {
 			Template t = velocityEngine
 					.getTemplate(getTemplateName);
 			StringWriter writer = new StringWriter();
-			t.merge(setContext(type, obj.getObj()), writer);
+			t.merge(setContext( obj.getObj()), writer);
 			logger.info("start to write the mail template");
 			String template = writer.toString();
 			logger.info("end the writer process ");
@@ -122,7 +122,7 @@ public class MailApiUtils {
 	 * @throws Exception 
 	 */
 	@SuppressWarnings("unchecked")
-	public VelocityContext setContext(String type, Object obj) throws Exception {
+	public VelocityContext setContext( Object obj) throws Exception {
 		logger.info("start to setContext()");
 		VelocityContext context = null;
 		context = setMailObject((Map<String, Object>) obj);
