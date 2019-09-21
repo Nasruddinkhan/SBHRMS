@@ -97,6 +97,13 @@ public final class User implements Serializable {
 
 	@Column(name = "IS_PERSONAL_FLAG", columnDefinition = CommonUtils.CHAR_01_DFLT)
 	private String isPersonalFlag;
+	
+	public String getIsPersonalFlag() {
+		return isPersonalFlag;
+	}
+	public void setIsPersonalFlag(String isPersonalFlag) {
+		this.isPersonalFlag = isPersonalFlag;
+	}
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub

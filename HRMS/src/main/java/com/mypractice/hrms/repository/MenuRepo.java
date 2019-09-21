@@ -16,6 +16,11 @@ import com.mypractice.hrms.model.Menus;
 @Repository
 public interface MenuRepo extends JpaRepository<Menus, Integer> {
 
+	/**
+	 * @return
+	 */
+	
+
 }
 
  

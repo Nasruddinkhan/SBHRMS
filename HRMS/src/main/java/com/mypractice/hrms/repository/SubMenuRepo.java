@@ -30,6 +30,8 @@ public interface SubMenuRepo extends JpaRepository<SubMenus, String> {
 	@Modifying
 	@Query("delete from SubMenus where subMenuId = :SUBMENUID")
 	Integer deleteSubmenu(@Param("SUBMENUID") String submenu);
+	
+	
  
 }
 

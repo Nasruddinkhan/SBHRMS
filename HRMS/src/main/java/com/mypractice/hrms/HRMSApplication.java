@@ -19,13 +19,15 @@ public class HRMSApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HRMSApplication.class, args);
 	}
-		@Bean
-		CommandLineRunner lookup(MailApiUtils mail) {
-			return args -> {
-				emailRepo.getTemplates().forEach(obj->{
-					System.out.println(obj+ " \n "+obj.getEmailTemplates());
-				});
-			};
-		}	
-		
+	@Bean
+	CommandLineRunner lookup(MailApiUtils mail) {
+		return args -> {
+		//	System.out.println(Base64.getEncoder().encode("zaid"));
+			//System.out.println(Base64.getDecoder().decode(Base64.getEncoder().encodeToString("zaid".getBytes())));
+
+			emailRepo.getTemplates().forEach(obj->{
+				System.out.println(obj+ " \n "+obj.getEmailTemplates());
+			});
+		};
+	}	
 }
