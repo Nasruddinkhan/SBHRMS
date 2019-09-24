@@ -49,6 +49,11 @@ public final class User implements Serializable {
     @JoinColumn(name = "STATUS_ID", foreignKey = @ForeignKey(name="FK_STATUS_ID"))
     private StatusMaster statusMaster;
 	
+
+	@OneToOne(fetch = FetchType.LAZY )
+    @JoinColumn(name = "ROLE_ID", foreignKey = @ForeignKey(name="FK_USER_ROLE_ID"))
+    private UserRole userRole;
+	
 	@Column(name = "FIRST_NAME", columnDefinition = CommonUtils.VARCHAR_50)
 	private String firstName;
 
@@ -239,6 +244,12 @@ public final class User implements Serializable {
 		this.userID = userID;
 	}
 
+	public UserRole getUserRole() {
+		return userRole;
+	}
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
 	@Override
 	public String toString() {
 		return "User [userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", fatherName="

@@ -21,9 +21,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.Menus;
 import com.mypractice.hrms.model.SubMenus;
+import com.mypractice.hrms.model.UserRole;
 import com.mypractice.hrms.service.MenuService;
 import com.mypractice.hrms.service.SubMenuDetails;
 import com.mypractice.hrms.service.SubMenuService;
+import com.mypractice.hrms.service.UserRoleService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -37,13 +39,20 @@ public final class SubMenuController {
 	private MenuService menuService;
 	@Autowired
 	private SubMenuService subMenuService;
+    @Autowired
+    private UserRoleService userRoleService;
+	
 	@ApiOperation(value = "add new sub menu manster.", notes = "Returns the  ResponseMessage  in body.")
-	@PostMapping("/submenu/{menuID}/savesubmenus")
-	public ResponseEntity<?> saveSubMenu( @RequestBody SubMenus subMenus, @PathVariable("menuID") Integer menuID) {
+	@PostMapping("/submenu/{menuID}/{roleID}/savesubmenus")
+	public ResponseEntity<?> saveSubMenu( @RequestBody SubMenus subMenus, @PathVariable("menuID") Integer menuID, @PathVariable Integer roleID) {
 		Optional<Menus> menus = menuService.findOne(menuID);
 		if(!menus.isPresent())
 			throw new ResourceNotFoundException("menu is not found ="+menuID);
+		Optional<UserRole> userRole= userRoleService.findOne(roleID);
+		if(!userRole.isPresent())
+			throw new ResourceNotFoundException("roleID is not found ="+roleID);
 		subMenus.setMenu(menus.get());
+		subMenus.setUseRole(userRole.get());
 		SubMenus sub = subMenuService.save(subMenus);
 		URI uriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{subMenuId}")
 				.buildAndExpand(sub.getSubMenuId()).toUri();

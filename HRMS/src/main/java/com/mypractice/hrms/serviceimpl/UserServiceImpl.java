@@ -3,9 +3,12 @@
  */
  package com.mypractice.hrms.serviceimpl;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mypractice.hrms.bean.ResponseMessage;
 import com.mypractice.hrms.model.User;
 import com.mypractice.hrms.repository.UserRepository;
 import com.mypractice.hrms.service.UserService;
@@ -16,6 +19,7 @@ import com.mypractice.hrms.service.UserService;
  * UserServiceImpl.java
  */
 @Service("userService")
+@Transactional
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepo;
@@ -28,6 +32,11 @@ public class UserServiceImpl implements UserService {
 	public User checkEmail(String email) {
 	
 		return userRepo.findUserByEmailID(email);
+	}
+	@Override
+	public ResponseMessage genrateRoleAccessMenu(String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -17,6 +17,7 @@ public interface SubMenuDetails {
 	public String getCreatedBy(); 
 	public Integer getActiveStatus();
 	public LocalDateTime getCreatedDate();
+	public String getRoleName();
 }
 
  

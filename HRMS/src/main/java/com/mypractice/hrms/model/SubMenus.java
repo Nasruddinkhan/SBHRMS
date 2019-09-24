@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 import com.mypractice.hrms.util.CommonUtils;
 
 /**
@@ -36,9 +35,20 @@ public final class SubMenus extends BaseBean implements Serializable {
 	@Column(name = "SUB_MENU_NAME", columnDefinition = CommonUtils.VARCHAR_50)
 	private String subMenuName;
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ROLE_ID" , foreignKey = @ForeignKey(name="FK_SUMENU_ROLE_ID"))
+	@JsonIgnore 
+	private UserRole useRole;
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MENU_ID" , foreignKey = @ForeignKey(name="FK_MENU_ID"))
 	@JsonIgnore 
 	private Menus menu;
+	
+	public UserRole getUseRole() {
+		return useRole;
+	}
+	public void setUseRole(UserRole useRole) {
+		this.useRole = useRole;
+	}
 	public String getSubMenuId() {
 		return subMenuId;
 	}

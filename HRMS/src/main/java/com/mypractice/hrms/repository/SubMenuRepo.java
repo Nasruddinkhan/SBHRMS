@@ -21,7 +21,11 @@ import com.mypractice.hrms.service.SubMenuDetails;
  */
 @Repository
 public interface SubMenuRepo extends JpaRepository<SubMenus, String> {
-	@Query("select s.subMenuId as subMenuId, s.subMenuName as subMenuName, m.menuName as menuName, s.createdBy as createdBy, s.createdDate  as createdDate from SubMenus s left join Menus m on  s.menu = m.menuID ")
+	@Query("select s.subMenuId as subMenuId, s.subMenuName as subMenuName, m.menuName as menuName, "
+			+ " s.createdBy as createdBy, s.createdDate  as createdDate, u.roleName as roleName "
+			+ " from SubMenus s "
+			+ "left join Menus m on  s.menu = m.menuID "
+			+" left join UserRole u on  s.useRole = u.roleID")
 	List<SubMenuDetails> getSubMenuDetails();
 
 	/**

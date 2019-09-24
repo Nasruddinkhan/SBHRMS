@@ -6,7 +6,6 @@ package com.mypractice.hrms.controller;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 import javax.validation.Valid;
 
@@ -23,8 +22,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.StatusMaster;
-import com.mypractice.hrms.model.User;
-import com.mypractice.hrms.model.UserRole;
 import com.mypractice.hrms.service.StatusService;
 
 import io.swagger.annotations.ApiOperation;
