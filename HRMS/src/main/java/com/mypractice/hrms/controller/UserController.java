@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mypractice.hrms.bean.ResponseMessage;
+import com.mypractice.hrms.bean.UserBean;
 import com.mypractice.hrms.model.StatusMaster;
 import com.mypractice.hrms.model.User;
 import com.mypractice.hrms.model.UserRole;
@@ -123,5 +125,25 @@ public class UserController {
 		else
 			throw new ResourceNotFoundException("email is not found " + emailID);
 		return responseMessage;
+	}
+	@PostMapping("/user/personaldetails")
+	public ResponseEntity<User>  savePersonalDetails(@RequestBody UserBean userBean) {
+		User user =  userService.checkEmail(userBean.getEmail());
+		user.setFirstName(userBean.getFirstName());
+		user.setLastName(userBean.getLastName());
+		user.setFatherName(userBean.getFatherName());
+		user.setGender(userBean.getGender());
+		user.setDob(userBean.getDob());
+		user.setMaritialStatus(userBean.getMaritial());
+		user.setDoj(userBean.getDoj());
+		user.setContactNo(userBean.getContactno());
+		user.setGurdianContactNo(userBean.getGuardian());
+		user.setAadhaarDetails(userBean.getAadhaarno());
+		user.setPanCard(userBean.getPancard());
+		user.setIsPersonalFlag(userBean.getIsPersonalFlag());
+		user = userService.registerUser(user);
+		if(null == user)
+			throw new RuntimeException("Internal error");
+		return new ResponseEntity<User>(user, HttpStatus.OK) ;
 	}
 }
