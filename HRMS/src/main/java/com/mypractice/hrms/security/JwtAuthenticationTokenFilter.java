@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.stereotype.Component;
 
 import com.mypractice.hrms.bean.JwtAuthenticationToken;
 
@@ -35,6 +36,7 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
         String header = request.getHeader("Authorization");
+        System.err.println(header);
         if (header == null || !header.startsWith("Token ")) {
             throw new RuntimeException("JWT Token is missing");
         }

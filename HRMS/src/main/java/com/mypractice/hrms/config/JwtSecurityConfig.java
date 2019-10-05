@@ -55,7 +55,6 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	
     	http.csrf().disable()
     	.authorizeRequests().antMatchers("**/hrms/api/**").authenticated()
     	.and()
@@ -65,8 +64,6 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter{
     	http.addFilterBefore(new JwtCORSFilter(), UsernamePasswordAuthenticationFilter.class);
     	http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     	http.headers().cacheControl();
-
-
     }
 }
 

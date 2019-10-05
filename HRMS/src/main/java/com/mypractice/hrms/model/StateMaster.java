@@ -32,16 +32,10 @@ public final class StateMaster extends BaseBean implements Serializable {
 	@ApiModelProperty(notes="minimum 3 charecter is required")
 	@Column(name="STATE_NAME", columnDefinition=CommonUtils.VARCHAR_50)
 	private String stateName;
-	@Column(name="UPD_COUNTER")
-	@Version
-	private Integer counter;
+	@Column(name="COUNTRY_CODE", columnDefinition = CommonUtils.CHAR_3)
+	private String countryCode;
 	
-	public Integer getCounter() {
-		return counter;
-	}
-	public void setCounter(Integer counter) {
-		this.counter = counter;
-	}
+	
 	public Integer getStateID() {
 		return stateID;
 	}
@@ -53,6 +47,16 @@ public final class StateMaster extends BaseBean implements Serializable {
 	}
 	public void setStateName(String stateName) {
 		this.stateName = stateName;
+	}
+	public String getCountryCode() {
+		return countryCode;
+	}
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+	@Override
+	public String toString() {
+		return "StateMaster [stateID=" + stateID + ", stateName=" + stateName + ", countryCode=" + countryCode+ "]";
 	}
 	
 }
