@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mypractice.hrms.bean.CityBean;
 import com.mypractice.hrms.model.CityMaster;
 import com.mypractice.hrms.repository.CityRepository;
 import com.mypractice.hrms.service.CityService;
@@ -44,7 +45,7 @@ public class CityServiceImpl implements CityService
 	}
 
 	@Override
-	public List<CityMaster> getCityDetails() {
+	public List<CityBean> getCityDetails() {
 		// TODO Auto-generated method stub
 		return cityRepository.findAllActiveCites();
 	}

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.mypractice.hrms.bean.CityBean;
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.CityMaster;
+import com.mypractice.hrms.model.StateMaster;
 import com.mypractice.hrms.repository.CommonDropdown;
 import com.mypractice.hrms.service.CityService;
 import com.mypractice.hrms.service.StateService;
@@ -34,21 +35,24 @@ import io.swagger.annotations.ApiOperation;
 public class CityController {
 	@Autowired
 	private CityService cityService;
+	
 	@Autowired
 	private StateService stateService;
 	@ApiOperation(value = "add new city Details.", notes = "Returns the  ResponseMessage  in body.")
-	@PostMapping("citymst/savecity")
-	public ResponseEntity<Object> saveCity(@RequestBody CityMaster cityMaster) {
+	@PostMapping("citymst/{stateID}/savecity")
+	public ResponseEntity<Object> saveCity(@RequestBody CityMaster cityMaster, @PathVariable Integer stateID) {
 		System.out.println("MYcityMaster====>"+cityMaster);
+		Optional<StateMaster> stateMaster= stateService.findOne(stateID);
+		cityMaster.setStateMst(stateMaster.get());
 		CityMaster master = cityService.save(cityMaster);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cityID}")
-				.buildAndExpand(master.getStateID()).toUri();
+				.buildAndExpand(master.getCityID()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	@ApiOperation(value = "returns all city details.", notes = "Returns city the  ResponseMessage  in body.")
 	@GetMapping("citymst/getAllCityDetails")
-	public List<CityMaster> findAll(){
-		List<CityMaster> lst = cityService.findAll();
+	public List<CityBean> findAll(){
+		List<CityBean> lst = cityService.getCityDetails();
 		if(lst.isEmpty()) {
 			throw new RuntimeException("No record found");
 		}
@@ -68,9 +72,9 @@ public class CityController {
 	}
 	@ApiOperation(value = "add new City Details.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/citymaster/getCites")
-	public List<CityMaster> getCityDetails() {
+	public List<CityBean> getCityDetails() {
 		System.out.println("CityMasterController.getCityDetails()");
-		List<CityMaster> ctymst = cityService.getCityDetails();
+		List<CityBean> ctymst = cityService.getCityDetails();
 		System.out.print(ctymst);
 		if (ctymst.isEmpty()) {
 			throw new ResourceNotFoundException("Record Not Found");
@@ -96,4 +100,5 @@ public class CityController {
 		}
 		return sttmst;
 	}
+	
 }

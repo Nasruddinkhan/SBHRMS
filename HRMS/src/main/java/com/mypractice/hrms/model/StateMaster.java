@@ -1,15 +1,21 @@
 package com.mypractice.hrms.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Version;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.mypractice.hrms.util.CommonUtils;
 
@@ -35,7 +41,16 @@ public final class StateMaster extends BaseBean implements Serializable {
 	@Column(name="COUNTRY_CODE", columnDefinition = CommonUtils.CHAR_3)
 	private String countryCode;
 	
+	@OneToMany(mappedBy = "stateMst", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<CityMaster> cityMasters ;
 	
+	public List<CityMaster> getCityMasters() {
+		return cityMasters;
+	}
+	public void setCityMasters(List<CityMaster> cityMasters) {
+		this.cityMasters = cityMasters;
+	}
 	public Integer getStateID() {
 		return stateID;
 	}

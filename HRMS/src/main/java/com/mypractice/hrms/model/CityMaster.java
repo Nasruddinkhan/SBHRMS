@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mypractice.hrms.util.CommonUtils;
 
 import io.swagger.annotations.ApiModel;
@@ -32,12 +36,10 @@ public class CityMaster extends BaseBean implements Serializable{
 	@Column(name="CITY_NAME", columnDefinition=CommonUtils.VARCHAR_50)
 	private String cityName;
 	
-	@Column(name="STATE_ID")
-	private Integer stateID;
-	
-	@Column(name="UPD_COUNTER")
-	@Version
-	private Integer counter;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "STATE_ID" , foreignKey = @ForeignKey(name="FK_STATE_ID"))
+	@JsonIgnore
+	private StateMaster stateMst;
 
 	public Integer getCityID() {
 		return cityID;
@@ -55,25 +57,13 @@ public class CityMaster extends BaseBean implements Serializable{
 		this.cityName = cityName;
 	}
 
-	public Integer getStateID() {
-		return stateID;
+	public StateMaster getStateMst() {
+		return stateMst;
 	}
 
-	public void setStateID(Integer stateID) {
-		this.stateID = stateID;
+	public void setStateMst(StateMaster stateMst) {
+		this.stateMst = stateMst;
 	}
 
-	public Integer getCounter() {
-		return counter;
-	}
 
-	public void setCounter(Integer counter) {
-		this.counter = counter;
-	}
-
-	@Override
-	public String toString() {
-		return "CityMaster [cityID=" + cityID + ", cityName=" + cityName + ", stateID=" + stateID + ", counter="
-				+ counter + "]";
-	}
 }
