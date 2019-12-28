@@ -24,7 +24,9 @@ public interface AddressRepository extends JpaRepository<Addresses, Integer> {
 	 * @param user
 	 * @return
 	 */
-	@Query("select a.addressID as addressID, a.pinCode as pinCode, a.addressDetails as addressDetails, c.cityID as cityID  from  Addresses a inner join CityMaster c on a.cityMst  = c.cityID  where a.user = :USERID")
+	@Query("select a.addressID as addressID, a.pinCode as pinCode, a.addressDetails as addressDetails,"
+			+ " c.cityID as cityID  from  Addresses a inner join CityMaster c "
+			+ " on a.cityMst  = c.cityID  where a.user = :USERID")
 	AddressDetails getUserDetails(@Param("USERID") User userID);
 
 }
