@@ -22,6 +22,7 @@ public class BaseBean {
 	private LocalDateTime createdDate;
 	@Column(name ="CREATED_BY" ,columnDefinition=CommonUtils.VARCHAR_50)	
 	private String createdBy;
+	@CreationTimestamp
 	@Column(name ="LAST_UPDATED_ON")	
 	private Date modifiedDate;
 	@Column(name ="LAST_UPDATED_BY" ,columnDefinition=CommonUtils.VARCHAR_50)	

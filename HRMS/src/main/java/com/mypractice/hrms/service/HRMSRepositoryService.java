@@ -1,7 +1,5 @@
 package com.mypractice.hrms.service;
 
-import com.mypractice.hrms.model.UserRole;
-
 /**
  * Nasruddin khan
  * DeMSRepositoryService.java

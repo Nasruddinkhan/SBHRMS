@@ -5,8 +5,8 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,6 @@ import com.mypractice.hrms.repository.MenuAccessRoleRepo;
 import com.mypractice.hrms.repository.SubMenuRepo;
 import com.mypractice.hrms.repository.UserRepository;
 import com.mypractice.hrms.service.UserService;
-
-import antlr.debug.NewLineEvent;
 
 
 /**
@@ -72,6 +70,11 @@ public class UserServiceImpl implements UserService {
 			responseMessage.setErrorMessage("Aproved Successfully");
 		}
 		return responseMessage;
+	}
+	@Override
+	public Optional<User> findOne(Integer userid) {
+		// TODO Auto-generated method stub
+		return userRepo.findById(userid);
 	}
 }
 

@@ -3,6 +3,8 @@
  */
  package com.mypractice.hrms.service;
 
+import java.util.Optional;
+
 import com.mypractice.hrms.bean.ResponseMessage;
 import com.mypractice.hrms.model.User;
 
@@ -26,6 +28,14 @@ public interface UserService {
 	User checkEmail(String email);
 	
 	ResponseMessage genrateRoleAccessMenu(User user);
+
+	
+
+	/**
+	 * @param userid
+	 * @return
+	 */
+	Optional<User> findOne(Integer userid);
 
 }
 
