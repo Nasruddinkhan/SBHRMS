@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mypractice.hrms.util.CommonUtils;
 
@@ -90,6 +91,7 @@ public final class User implements Serializable {
 	@Column(name = "PAN_CARD",  columnDefinition = CommonUtils.VARCHAR_15)
 	private String panCard;
 
+	@JsonIgnore
 	@Column(name = "PASSWORD", columnDefinition = CommonUtils.VARCHAR_20 )
 	private String password;
 
