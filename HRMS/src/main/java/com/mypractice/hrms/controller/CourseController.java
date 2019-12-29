@@ -12,8 +12,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
@@ -26,9 +24,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.Course;
 import com.mypractice.hrms.repository.CourseRepository;
+
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -43,7 +43,7 @@ public class CourseController {
 
 	@ApiOperation(value = "add new course Details.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("course/add")
-	public ResponseEntity<Object> saveCourseDetails(@Valid @RequestBody Course course) {
+	public ResponseEntity<Object> saveCourseDetails( @RequestBody Course course) {
 		Course curse = courseRepository.save(course);
 		URI UriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{courseID}")
 				.buildAndExpand(curse.getCourseID()).toUri();

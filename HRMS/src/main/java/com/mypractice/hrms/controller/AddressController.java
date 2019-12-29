@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +28,8 @@ import com.mypractice.hrms.model.Addresses;
 import com.mypractice.hrms.model.CityMaster;
 import com.mypractice.hrms.model.User;
 import com.mypractice.hrms.repository.AddressDetails;
+import com.mypractice.hrms.repository.CityRepository;
 import com.mypractice.hrms.service.AddressService;
-import com.mypractice.hrms.service.CityService;
 import com.mypractice.hrms.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -39,14 +38,13 @@ import io.swagger.annotations.ApiOperation;
  * @author nasru
  *
  */
-@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/hrms/api/")
 public class AddressController {
 	@Autowired
 	private AddressService addressService;
 	@Autowired
-	private CityService cityService;
+	private CityRepository cityRepository;
 	@Autowired
 	private UserService userService;
 
@@ -55,9 +53,9 @@ public class AddressController {
 	public ResponseEntity<?> addAddressDetails(@RequestBody Addresses addresses, @PathVariable Integer userid,
 			@PathVariable("cityid") Integer cityID) {
 		User usr = userService.findOne(userid).get();
-		CityMaster cityMst = cityService.findOne(cityID).get();
+		Optional<CityMaster> cityMst = cityRepository.findById(cityID);
 		addresses.setUser(usr);
-		addresses.setCityMst(cityMst);
+		addresses.setCityMst(cityMst.get());
 		Addresses addr = addressService.saveAddress(addresses);
 		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{addressID}")
 				.buildAndExpand(addr.getAddressID()).toUri()).build();
@@ -67,9 +65,8 @@ public class AddressController {
 	@GetMapping("/address/{addressID}/getaddress")
 	public Resource<Addresses> getAddress(@PathVariable Integer addressID) {
 		Optional<Addresses> addMst = addressService.findOne(addressID);
-		if (!addMst.isPresent()) {
+		if (!addMst.isPresent()) 
 			throw new RuntimeException("address is not found" + addressID);
-		}
 		Resource<Addresses> addResource = new Resource<Addresses>(addMst.get());
 		ControllerLinkBuilder links = linkTo(methodOn(this.getClass()).getAddressDetails());
 		addResource.add(links.withRel("all-add"));
