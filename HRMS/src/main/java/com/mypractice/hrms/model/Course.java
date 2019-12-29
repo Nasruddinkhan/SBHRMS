@@ -6,11 +6,18 @@
 package com.mypractice.hrms.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  * @author nasru
@@ -28,6 +35,22 @@ public class Course extends BaseBean implements Serializable {
 	private String courseID;
 	@Column(name = "COURSE_NAME", length = 50)
 	private String courseName;
+	@OneToMany(mappedBy = "educationMst", fetch = FetchType.LAZY)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<Education> education ;
+	
+	/**
+	 * @return the education
+	 */
+	public List<Education> getEducation() {
+		return education;
+	}
+	/**
+	 * @param education the education to set
+	 */
+	public void setEducation(List<Education> education) {
+		this.education = education;
+	}
 	/**
 	 * @return the courseID
 	 */
