@@ -68,9 +68,8 @@ import io.swagger.annotations.ApiOperation;
 	 @GetMapping("/role/{roleID}/roleid")
 	 public Resource<UserRole> getRole(@PathVariable Integer roleID) {
 		 Optional<UserRole> userRole = userRoleService.findOne(roleID);
-		 if (!userRole.isPresent()) {
+		 if (!userRole.isPresent()) 
 			 throw new RuntimeException("role is not found" + roleID);
-		 }
 		 Resource<UserRole> userRoles= new Resource<UserRole>(userRole.get());
 		 ControllerLinkBuilder links= linkTo(methodOn(this.getClass()).findAll());
 		 userRoles.add(links.withRel("all-roles"));

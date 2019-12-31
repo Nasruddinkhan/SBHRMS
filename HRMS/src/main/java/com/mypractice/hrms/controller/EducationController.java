@@ -10,6 +10,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
@@ -33,11 +35,12 @@ import com.mypractice.hrms.repository.CourseRepository;
 import com.mypractice.hrms.repository.EducationRepository;
 import com.mypractice.hrms.repository.UniversityRepository;
 import com.mypractice.hrms.repository.UserRepository;
-
+import com.mypractice.hrms.bean.EducationBean;
 import io.swagger.annotations.ApiOperation;
 
 /**
  * @author nasru
+ * @param <EducationBean>
  *
  */
 @RestController
@@ -63,6 +66,8 @@ public class EducationController {
 		Optional<Univercity> university=  universityRepository.findById(universityID);
 		if(!user.isPresent() || !course.isPresent() || !university.isPresent())
 			throw new ResourceNotFoundException("not found");
+		education.setUniversityMst(university.get());
+		education.setEducationMst(course.get());
 		education.setUser(user.get());
 		Education edu = educationRepository.save(education);
 		return ResponseEntity.created(ServletUriComponentsBuilder
@@ -73,12 +78,23 @@ public class EducationController {
 
 	@ApiOperation(value = "add new education Details.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/education/geteducations")
-	public List<Education> getEducationDetails() {
+	public ResponseEntity<?> getEducationDetails() {
 		List<Education> educations = educationRepository.findAll();
-		System.out.print(educations);
 		if (educations.isEmpty())
 			throw new ResourceNotFoundException("Record Not Found");
-		return educations;
+		return ResponseEntity.ok(educations.stream().map((Function<? super Education,? extends EducationBean>)obj->{
+			EducationBean bean = new EducationBean();
+			bean.setEducationID(obj.getEducationID());
+			bean.setCourseID(obj.getEducationMst().getCourseID());
+			bean.setCourseName(obj.getEducationMst().getCourseName());
+			bean.setUniversityID(obj.getUniversityMst().getUniversityID());
+			bean.setUnivercityName(obj.getUniversityMst().getUnivercityName());
+			bean.setCollegeName(obj.getCollegeName());
+			bean.setFromDate(obj.getFromDate());
+			bean.setToDate(obj.getToDate());
+			bean.setComments(obj.getComments());
+			return bean;
+		}).collect(Collectors.toList()));
 	}
 
 	@ApiOperation(value = "add new City Details.", notes = "Returns the  ResponseMessage  in body.")
