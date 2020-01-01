@@ -5,24 +5,20 @@
  */
 package com.mypractice.hrms.bean;
 
-import com.mypractice.hrms.model.Course;
-import com.mypractice.hrms.model.Univercity;
-import com.mypractice.hrms.model.User;
-
 /**
  * @author nasru
  *
  */
 public class EducationBean {
 	private Integer educationID;
-	private String fromDate;
-	private String toDate;
-	private String collegeName;
-	private String courseID;
-	private String courseName;
-	private String universityID;
-	private String univercityName;
-	private String comments;
+	private String  fromDate;
+	private String  toDate;
+	private String  collegeName;
+	private String  courseID;
+	private String  courseName;
+	private String  universityID;
+	private String  univercityName;
+	private String  comments;
 	/**
 	 * @return the educationID
 	 */
