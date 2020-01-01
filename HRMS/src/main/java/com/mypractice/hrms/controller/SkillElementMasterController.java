@@ -32,8 +32,8 @@ import com.mypractice.hrms.model.SkillElementMaster;
 import com.mypractice.hrms.model.SkillMaster;
 import com.mypractice.hrms.repository.CommonDropdown;
 import com.mypractice.hrms.repository.SkillElelentsDetails;
-import com.mypractice.hrms.service.SkillElementService;
-import com.mypractice.hrms.service.SkillService;
+import com.mypractice.hrms.repository.SkillElementRepo;
+import com.mypractice.hrms.repository.SkillRepository;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -47,20 +47,20 @@ import io.swagger.annotations.ApiOperation;
 public class SkillElementMasterController {
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
-	private SkillElementService skillElementService;
+	private SkillElementRepo skillElementRepository;
 	@Autowired
-	private SkillService skillService;
+	private SkillRepository skillRepository;
     	
 	@ApiOperation(value = "add new new Skill elemrnt manster.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("/skillelement/{skillID}/savesubskills")
 	public ResponseEntity<?> saveSkillElementDetails(@Valid @RequestBody SkillElementMaster skillelementMaster, @PathVariable("skillID") Integer skillId) {
 		System.out.println(skillelementMaster);
 		System.out.println(skillId);
-		Optional<SkillMaster> skills = skillService.findOne(skillId);
+		Optional<SkillMaster> skills = skillRepository.findById(skillId);
 		if(!skills.isPresent())
 			throw new ResourceNotFoundException("skill is not found ="+skillId);
 		skillelementMaster.setSkillMst(skills.get());
-		SkillElementMaster sklEle= skillElementService.saveSkillElement(skillelementMaster);
+		SkillElementMaster sklEle= skillElementRepository.save(skillelementMaster);
 		URI uriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{skillementID}")
 				.buildAndExpand(sklEle.getSkillElementID()).toUri();
 		return ResponseEntity.created(uriLocation).build();
@@ -69,30 +69,27 @@ public class SkillElementMasterController {
 	@ApiOperation(value = "areturns skills.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/skillelement/getskillelements")
 	public List<SkillElementMaster> findAllSkillElements(){
-		List<SkillElementMaster> sklmst = skillElementService.findAll();
-		if (sklmst.isEmpty()) {
+		List<SkillElementMaster> sklmst = skillElementRepository.findAll();
+		if (sklmst.isEmpty()) 
 			throw new ResourceNotFoundException("Record Not Found");
-		}
 		return sklmst;
 	}
 	@ApiOperation(value = "delete  Skill elements Details.", notes = "Returns the  ResponseMessage  in body.")
 	@DeleteMapping("/skillelement/{skillementID}/deleteskillelements")
 	public void deleteSkillElements(@PathVariable("skillementID") Integer skillEleId) {
-		Optional<SkillElementMaster> skillElementsmaster = skillElementService.findOne(skillEleId);
-		if (!skillElementsmaster.isPresent()) {
+		Optional<SkillElementMaster> skillElementsmaster = skillElementRepository.findById(skillEleId);
+		if (!skillElementsmaster.isPresent())
 			throw new RuntimeException("skillementID is not found" + skillEleId);
-		}
 		SkillElementMaster sklMst = skillElementsmaster.get();
-		skillElementService.deleteSkill(sklMst);
+		skillElementRepository.delete(sklMst);
 	}
 	
 	@ApiOperation(value = "delete  Skill elements Details.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/skillmaster/{skillementID}/skillelements")
 	public Resource<SkillElementMaster> getSkillElements(@PathVariable("skillementID") Integer skillEleId) {
-		Optional<SkillElementMaster> skillElementsmaster = skillElementService.findOne(skillEleId);
-		if (!skillElementsmaster.isPresent()) {
+		Optional<SkillElementMaster> skillElementsmaster = skillElementRepository.findById(skillEleId);
+		if (!skillElementsmaster.isPresent()) 
 			throw new RuntimeException("skillementID is not found" + skillEleId);
-		}
 		SkillElementMaster sklMst = skillElementsmaster.get();
 		Resource<SkillElementMaster> resource = new Resource<SkillElementMaster> (sklMst);
 		ControllerLinkBuilder links= linkTo(methodOn(this.getClass()).findAllSkillElements());
@@ -103,7 +100,7 @@ public class SkillElementMasterController {
 	@ApiOperation(value = "areturns skills.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/skillelement/getskills")
 	public List<CommonDropdown> findAllSkills(){
-		List<CommonDropdown> sklmst = skillService.findAllSkills();
+		List<CommonDropdown> sklmst = skillRepository.getSkills();
 		if (sklmst.isEmpty()) {
 			throw new ResourceNotFoundException("Record Not Found");
 		}
@@ -112,7 +109,7 @@ public class SkillElementMasterController {
 	@ApiOperation(value = "returns skill elelemts skills.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/skillelement/getskillelementsdetails")
 	public List<SkillElelentsDetails> findAllSkillElelentsDetails(){
-		List<SkillElelentsDetails> sklmst = skillElementService.findAllSkillElelentsDetails();
+		List<SkillElelentsDetails> sklmst = skillElementRepository.getSkillElementsDetails();
 		if (sklmst.isEmpty()) {
 			throw new ResourceNotFoundException("Record Not Found");
 		}

@@ -27,8 +27,8 @@ import com.mypractice.hrms.bean.UserBean;
 import com.mypractice.hrms.model.StatusMaster;
 import com.mypractice.hrms.model.User;
 import com.mypractice.hrms.model.UserRole;
-import com.mypractice.hrms.service.StatusService;
-import com.mypractice.hrms.service.UserRoleService;
+import com.mypractice.hrms.repository.StatusRepo;
+import com.mypractice.hrms.repository.UserRoleRepo;
 import com.mypractice.hrms.service.UserService;
 import com.mypractice.hrms.util.EmailTaskService;
 
@@ -44,7 +44,7 @@ public class UserController {
 	private UserService userService;
 
 	@Autowired
-	private StatusService statusService;
+	private StatusRepo statusRepo;
 
 	@Autowired
 	EmailTaskService emailTaskService;
@@ -55,7 +55,7 @@ public class UserController {
 	private Integer changePassword;
 
 	@Autowired
-	private UserRoleService userRoleService;
+	private UserRoleRepo userRoleRepo;
 
 	Predicate<String> chkUser = u -> userService.checkEmail(u) != null;
 
@@ -66,7 +66,7 @@ public class UserController {
 		URI UriLocation = null;
 		Predicate<User> chkUser = u -> userService.checkEmail(u.getEmail()) != null;
 		if (!chkUser.test(user)) {
-			Optional<StatusMaster> appStatus = statusService.findOne(statusID);
+			Optional<StatusMaster> appStatus = statusRepo.findById(statusID);
 			if (!appStatus.isPresent())
 				throw new ResourceNotFoundException("Internal error contect with support team");
 			user.setStatusMaster(appStatus.get());
@@ -107,9 +107,9 @@ public class UserController {
 		ResponseMessage responseMessage= null;
 		System.out.println(emailID + " \t " + status + " \t " + approver + " \t " + roleId);
 		if (chkUser.test(emailID)) {
-			Optional<UserRole> userRole = userRoleService.findOne(roleId);
+			Optional<UserRole> userRole = userRoleRepo.findById(roleId);
 			if(userRole.isPresent()) {
-				Optional<StatusMaster> appStatus = statusService.findOne(status);
+				Optional<StatusMaster> appStatus = statusRepo.findById(status);
 				if(appStatus.isPresent()) {
 					User user = userService.checkEmail(emailID);
 					user.setUserRole(userRole.get());

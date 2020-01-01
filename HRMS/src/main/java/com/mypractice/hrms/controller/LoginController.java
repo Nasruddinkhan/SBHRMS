@@ -18,9 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +30,8 @@ import com.mypractice.hrms.bean.ResponseMessage;
 import com.mypractice.hrms.model.User;
 import com.mypractice.hrms.repository.MenuAccessRoleRepo;
 import com.mypractice.hrms.repository.SubMenuRepo;
+import com.mypractice.hrms.repository.UserRepository;
 import com.mypractice.hrms.security.JwtUtil;
-import com.mypractice.hrms.service.LoginService;
 import com.mypractice.hrms.serviceimpl.UserServiceDetails;
 
 import io.swagger.annotations.ApiOperation;
@@ -60,7 +58,7 @@ public class LoginController {
 	@Autowired
 	private UserServiceDetails userServiceDtl;
 	@Autowired
-	private LoginService loginService;
+	private UserRepository userRepository;
 
 	@Autowired
 	private JwtUtil JwtUtil;
@@ -69,17 +67,15 @@ public class LoginController {
 	@ApiOperation(value = "LoginBO Bo.", notes = "validate the login user.")
 	public ResponseEntity<?> validate(
 			@ApiParam(value = "LoginBO Bo is required", required = true) @RequestBody LoginBO loginBO) {
-		System.out.println("["+loginBO.getUsername()+"] ["+loginBO.getPassword()+"]");
-			authManager.authenticate(
-					new UsernamePasswordAuthenticationToken(loginBO.getUsername(), loginBO.getPassword()));
-		
+		System.out.println("[" + loginBO.getUsername() + "] [" + loginBO.getPassword() + "]");
+		authManager.authenticate(new UsernamePasswordAuthenticationToken(loginBO.getUsername(), loginBO.getPassword()));
+
 		final UserDetails userDetails = userServiceDtl.loadUserByUsername(loginBO.getUsername());
 		ResponseMessage msg = new ResponseMessage();
 		// TODO Auto-generated method stub
-		User details = loginService.checkDBLogin(loginBO);
+		User details = userRepository.findUserByEmailID(loginBO.getUsername());
 		List<DropDownBean> accessMenus = null;
 		Predicate<User> check = u -> u != null;
-		if (check.test(details)) {
 			Predicate<String> checkStatus = s -> approved.intern() == s.intern();
 			System.out.println(details.getStatusMaster().getStatusID() + " " + approved);
 			if (checkStatus.test(details.getStatusMaster().getStatusID())) {
@@ -103,7 +99,5 @@ public class LoginController {
 				return new ResponseEntity<>(msg, HttpStatus.OK);
 			}
 			throw new RuntimeException("Inactive user! Application is pending for registration");
-		}
-		throw new RuntimeException("Invalid credential! user id password is incorrect ");
 	}
 }

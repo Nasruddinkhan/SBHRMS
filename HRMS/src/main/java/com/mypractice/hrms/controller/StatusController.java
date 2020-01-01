@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.StatusMaster;
-import com.mypractice.hrms.service.StatusService;
+import com.mypractice.hrms.repository.StatusRepo;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -33,11 +33,11 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/hrms/api/")
 public class StatusController {
 	@Autowired
-	private StatusService statusService;
+	private StatusRepo statusRepo;
 	@ApiOperation(value = "add new status Details.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("status/add")
 	public ResponseEntity<Object> saveSkillDetails(@Valid @RequestBody StatusMaster statusMaster) {
-		StatusMaster statusMst = statusService.saveStatus(statusMaster);
+		StatusMaster statusMst = statusRepo.save(statusMaster);
 		URI UriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{statusID}")
 				.buildAndExpand(statusMst.getStatusID()).toUri();
 		return ResponseEntity.created( UriLocation).build();
@@ -45,7 +45,7 @@ public class StatusController {
 	 @ApiOperation(value = "get all  status .", notes = "Returns the  ResponseMessage  in body.")
 	 @GetMapping("status/statusdtls")
 	 public List<StatusMaster> findAll() {
-		 List<StatusMaster> statusMasters = statusService.findAll();
+		 List<StatusMaster> statusMasters = statusRepo.findAll();
 		 if(statusMasters.isEmpty())
 			 throw new ResourceNotFoundException("Status is not found");
 		 return statusMasters;
@@ -55,9 +55,9 @@ public class StatusController {
 	 @DeleteMapping("status/{statusID}/delete")
 	 public void deleteStatus(@PathVariable String statusID) {
 		 System.out.println(statusID);
-		 Optional<StatusMaster> statusMst = statusService.findOne(statusID);
+		 Optional<StatusMaster> statusMst = statusRepo.findById(statusID);
 		 if(!statusMst.isPresent())
 			 throw new ResourceNotFoundException("Status id is not found ="+statusID);
-		 statusService.deleteStatus(statusMst.get());
+		 statusRepo.delete(statusMst.get());
 	 }
 }

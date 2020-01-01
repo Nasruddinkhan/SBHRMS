@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.Menus;
-import com.mypractice.hrms.service.MenuService;
+import com.mypractice.hrms.repository.MenuRepo;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -35,11 +35,11 @@ import io.swagger.annotations.ApiOperation;
  @RequestMapping("/hrms/api/")
 public final class MenuController {
 	 @Autowired
-	 private MenuService menuService;
+	 private MenuRepo menuRepo;
 	 @ApiOperation(value = "add new menu Details.", notes = "Returns the  ResponseMessage  in body.")
 	 @PostMapping("menu/add")
-	 public ResponseEntity<Object> saveSkillDetails(@Valid @RequestBody Menus menus) {
-		 Menus usRole = menuService.saveUserRole(menus);
+	 public ResponseEntity<Object> saveMenuDetails(@Valid @RequestBody Menus menus) {
+		 Menus usRole = menuRepo.save(menus);
 		 URI UriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{menuID}")
 				 .buildAndExpand(usRole.getMenuID()).toUri();
 		 return ResponseEntity.created(UriLocation).build();
@@ -47,16 +47,16 @@ public final class MenuController {
 	 @ApiOperation(value = "add new menu Details.", notes = "Returns the  ResponseMessage  in body.")
 	 @GetMapping("menu/menus")
 	 public List<Menus> findAll(){
-		return menuService.findAll();
+		return menuRepo.findAll();
 	 }
 	 
 	 @ApiOperation(value = "delete menu", notes = "Returns the  ResponseMessage  in body.")
 	 @DeleteMapping("menu/{menuID}/delete")
 	 public void deleteRole(@PathVariable Integer menuID) {
-		 Optional<Menus> userRole = menuService.findOne(menuID);
+		 Optional<Menus> userRole = menuRepo.findById(menuID);
 		 if(!userRole.isPresent())
 			 throw new ResourceNotFoundException("Menu id is not found ="+menuID);
-		 menuService.deleteMenu(userRole.get());
+		 menuRepo.delete(userRole.get());
 	 }
 }
 

@@ -27,7 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.UserRole;
-import com.mypractice.hrms.service.UserRoleService;
+import com.mypractice.hrms.repository.UserRoleRepo;
 
 import io.swagger.annotations.ApiOperation;
 /**
@@ -39,11 +39,11 @@ import io.swagger.annotations.ApiOperation;
  @RequestMapping("/hrms/api/")
  public class UserRoleController {
 	 @Autowired
-	 private UserRoleService userRoleService;
+	 private UserRoleRepo userRoleRepo;
 	 @ApiOperation(value = "add new role Details.", notes = "Returns the  ResponseMessage  in body.")
 	 @PostMapping("role/add")
-	 public ResponseEntity<Object> saveSkillDetails(@Valid @RequestBody UserRole userRole) {
-		 UserRole usRole = userRoleService.saveUserRole(userRole);
+	 public ResponseEntity<Object> saveUserRoleDetails(@Valid @RequestBody UserRole userRole) {
+		 UserRole usRole = userRoleRepo.save(userRole);
 		 URI UriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{roleID}")
 				 .buildAndExpand(usRole.getRoleID()).toUri();
 		 return ResponseEntity.created(UriLocation).build();
@@ -51,15 +51,15 @@ import io.swagger.annotations.ApiOperation;
 	 @ApiOperation(value = "delete  role .", notes = "Returns the  ResponseMessage  in body.")
 	 @DeleteMapping("role/{roleID}/delete")
 	 public void deleteRole(@PathVariable Integer roleID) {
-		 Optional<UserRole> userRole = userRoleService.findOne(roleID);
+		 Optional<UserRole> userRole = userRoleRepo.findById(roleID);
 		 if(!userRole.isPresent())
 			 throw new ResourceNotFoundException("Role id is not found ="+roleID);
-		 userRoleService.deleteRole(userRole.get());
+		 userRoleRepo.delete(userRole.get());
 	 }
 	 @ApiOperation(value = "get all  role .", notes = "Returns the  ResponseMessage  in body.")
 	 @GetMapping("role/roles")
 	 public List<UserRole> findAll() {
-		 List<UserRole> roles = userRoleService.findAll();
+		 List<UserRole> roles = userRoleRepo.findAll();
 		 if(roles.isEmpty())
 			 throw new ResourceNotFoundException("Role is not found");
 		 return roles;
@@ -67,7 +67,7 @@ import io.swagger.annotations.ApiOperation;
 	 @ApiOperation(value = "add new Skill Details.", notes = "Returns the  ResponseMessage  in body.")
 	 @GetMapping("/role/{roleID}/roleid")
 	 public Resource<UserRole> getRole(@PathVariable Integer roleID) {
-		 Optional<UserRole> userRole = userRoleService.findOne(roleID);
+		 Optional<UserRole> userRole = userRoleRepo.findById(roleID);
 		 if (!userRole.isPresent()) 
 			 throw new RuntimeException("role is not found" + roleID);
 		 Resource<UserRole> userRoles= new Resource<UserRole>(userRole.get());

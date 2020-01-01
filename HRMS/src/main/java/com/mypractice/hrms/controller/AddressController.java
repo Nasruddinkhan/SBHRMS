@@ -28,8 +28,8 @@ import com.mypractice.hrms.model.Addresses;
 import com.mypractice.hrms.model.CityMaster;
 import com.mypractice.hrms.model.User;
 import com.mypractice.hrms.repository.AddressDetails;
+import com.mypractice.hrms.repository.AddressRepository;
 import com.mypractice.hrms.repository.CityRepository;
-import com.mypractice.hrms.service.AddressService;
 import com.mypractice.hrms.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -42,7 +42,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/hrms/api/")
 public class AddressController {
 	@Autowired
-	private AddressService addressService;
+	private AddressRepository addressRepository;
 	@Autowired
 	private CityRepository cityRepository;
 	@Autowired
@@ -56,7 +56,7 @@ public class AddressController {
 		Optional<CityMaster> cityMst = cityRepository.findById(cityID);
 		addresses.setUser(usr);
 		addresses.setCityMst(cityMst.get());
-		Addresses addr = addressService.saveAddress(addresses);
+		Addresses addr = addressRepository.save(addresses);
 		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{addressID}")
 				.buildAndExpand(addr.getAddressID()).toUri()).build();
 	}
@@ -64,7 +64,7 @@ public class AddressController {
 	@ApiOperation(value = "get address Details.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/address/{addressID}/getaddress")
 	public Resource<Addresses> getAddress(@PathVariable Integer addressID) {
-		Optional<Addresses> addMst = addressService.findOne(addressID);
+		Optional<Addresses> addMst = addressRepository.findById(addressID);
 		if (!addMst.isPresent()) 
 			throw new RuntimeException("address is not found" + addressID);
 		Resource<Addresses> addResource = new Resource<Addresses>(addMst.get());
@@ -80,7 +80,7 @@ public class AddressController {
 	@GetMapping("/address/getaddress")
 	public List<Addresses> getAddressDetails() {
 		// TODO Auto-generated method stub
-		List<Addresses> address = addressService.findAll();
+		List<Addresses> address = addressRepository.findAll();
 		if (address.isEmpty())
 			throw new ResourceNotFoundException("Record Not Found");
 		return address;
@@ -90,7 +90,7 @@ public class AddressController {
 	@GetMapping("/address/{userID}/useraddress")
 	public AddressDetails getUserAddress(@PathVariable Integer userID) {
 		System.out.println("address userID ["+userID+"]");
-		AddressDetails address  = addressService.getUserAddress( userService.findOne(userID).get());
+		AddressDetails address  =addressRepository.getUserDetails( userService.findOne(userID).get());
 		if(address == null) 
 			throw new ResourceNotFoundException("addrees not found"+ userID);
 		return address;

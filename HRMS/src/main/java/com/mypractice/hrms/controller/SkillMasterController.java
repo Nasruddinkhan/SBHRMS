@@ -28,7 +28,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.SkillMaster;
-import com.mypractice.hrms.service.SkillService;
+import com.mypractice.hrms.repository.SkillRepository;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -42,13 +42,13 @@ public class SkillMasterController {
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private SkillService skillService;
+	private SkillRepository skillRepository;
 
 	@ApiOperation(value = "add new Skill Details.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("/skillmaster/saveskill")
 	public ResponseEntity<Object> saveSkillDetails(@RequestBody SkillMaster skillMaster) {
 		System.out.println(skillMaster);
-		skillMaster = skillService.saveNewkill(skillMaster);
+		skillMaster = skillRepository.save(skillMaster);
 		URI UriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{skillID}")
 				.buildAndExpand(skillMaster.getSkillID()).toUri();
 		return ResponseEntity.created(UriLocation).build();
@@ -57,10 +57,9 @@ public class SkillMasterController {
 	@ApiOperation(value = "add new Skill Details.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/skillmaster/{skillID}/skill")
 	public Resource<SkillMaster> getSkill(@PathVariable Integer skillID) {
-		Optional<SkillMaster> skillmaster = skillService.findOne(skillID);
-		if (!skillmaster.isPresent()) {
+		Optional<SkillMaster> skillmaster = skillRepository.findById(skillID);
+		if (!skillmaster.isPresent()) 
 			throw new RuntimeException("skilid is not found" + skillID);
-		}
 		Resource<SkillMaster> skiResource= new Resource<SkillMaster>(skillmaster.get());
 		ControllerLinkBuilder links= linkTo(methodOn(this.getClass()).getSkillDetails());
 		skiResource.add(links.withRel("all-skills"));
@@ -71,7 +70,7 @@ public class SkillMasterController {
 	@GetMapping("/skillmaster/getskills")
 	public List<SkillMaster> getSkillDetails() {
 		System.out.println("SkillMasterController.getSkillDetails()");
-		List<SkillMaster> sklmst = skillService.getSkillDetails();
+		List<SkillMaster> sklmst = skillRepository.findAll();
 		System.out.print(sklmst);
 		if (sklmst.isEmpty()) {
 			throw new ResourceNotFoundException("Record Not Found");
@@ -81,11 +80,10 @@ public class SkillMasterController {
 	@ApiOperation(value = "add new Skill Details.", notes = "Returns the  ResponseMessage  in body.")
 	@DeleteMapping("/skillmaster/{skillId}/deleteskill")
 	public void deleteSkill(@PathVariable("skillId") Integer skillId) {
-		Optional<SkillMaster> skillmaster = skillService.findOne(skillId);
-		if (!skillmaster.isPresent()) {
+		Optional<SkillMaster> skillmaster = skillRepository.findById(skillId);
+		if (!skillmaster.isPresent()) 
 			throw new RuntimeException("skilid is not found" + skillId);
-		}
 		SkillMaster sklMst = skillmaster.get();
-		skillService.deleteSkill(sklMst);
+		skillRepository.delete(sklMst);
 	}
 }

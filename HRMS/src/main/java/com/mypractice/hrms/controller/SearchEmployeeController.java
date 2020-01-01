@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mypractice.hrms.model.User;
-import com.mypractice.hrms.service.SearchEmployeeService;
+import com.mypractice.hrms.repository.UserRepository;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -24,11 +24,11 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/hrms/api/")
 public final class SearchEmployeeController {
 	@Autowired
-	private SearchEmployeeService searchEmployeeService;
+	private  UserRepository userRepository;
 	@ApiOperation(value="find all users",  notes = "return all user list")
 	@GetMapping("searchemployees/emplist")
 	public List<User> findAll(){
-		return searchEmployeeService.findAll();
+		return userRepository.findAll();
 	}
 }
 

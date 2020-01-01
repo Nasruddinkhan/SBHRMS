@@ -24,9 +24,9 @@ import com.mypractice.hrms.bean.CityBean;
 import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.CityMaster;
 import com.mypractice.hrms.model.StateMaster;
+import com.mypractice.hrms.repository.CityRepository;
 import com.mypractice.hrms.repository.CommonDropdown;
-import com.mypractice.hrms.service.CityService;
-import com.mypractice.hrms.service.StateService;
+import com.mypractice.hrms.repository.StateRepo;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -34,17 +34,17 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/hrms/api/")
 public class CityController {
 	@Autowired
-	private CityService cityService;
+	private CityRepository cityRepository;
 	
 	@Autowired
-	private StateService stateService;
+	private StateRepo stateRepo;
 	@ApiOperation(value = "add new city Details.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("citymst/{stateID}/savecity")
 	public ResponseEntity<Object> saveCity(@RequestBody CityMaster cityMaster, @PathVariable Integer stateID) {
 		System.out.println("MYcityMaster====>"+cityMaster);
-		Optional<StateMaster> stateMaster= stateService.findOne(stateID);
+		Optional<StateMaster> stateMaster= stateRepo.findById(stateID);
 		cityMaster.setStateMst(stateMaster.get());
-		CityMaster master = cityService.save(cityMaster);
+		CityMaster master = cityRepository.save(cityMaster);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{cityID}")
 				.buildAndExpand(master.getCityID()).toUri();
 		return ResponseEntity.created(uri).build();
@@ -52,7 +52,7 @@ public class CityController {
 	@ApiOperation(value = "returns all city details.", notes = "Returns city the  ResponseMessage  in body.")
 	@GetMapping("citymst/getAllCityDetails")
 	public List<CityBean> findAll(){
-		List<CityBean> lst = cityService.getCityDetails();
+		List<CityBean> lst = cityRepository.findAllActiveCites();
 		if(lst.isEmpty()) {
 			throw new RuntimeException("No record found");
 		}
@@ -61,10 +61,9 @@ public class CityController {
 	@ApiOperation(value = "add new City Details.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/citymst/{cityID}/city")
 	public Resource<CityMaster> getCity(@PathVariable Integer cityID) {
-		Optional<CityMaster> citymaster = cityService.findOne(cityID);
-		if (!citymaster.isPresent()) {
+		Optional<CityMaster> citymaster = cityRepository.findById(cityID);
+		if (!citymaster.isPresent()) 
 			throw new RuntimeException("cityid is not found" + cityID);
-		}
 		Resource<CityMaster> cityResource= new Resource<CityMaster>(citymaster.get());
 		ControllerLinkBuilder links= linkTo(methodOn(this.getClass()).getCityDetails());
 		cityResource.add(links.withRel("all-city"));
@@ -74,7 +73,7 @@ public class CityController {
 	@GetMapping("/citymaster/getCites")
 	public List<CityBean> getCityDetails() {
 		System.out.println("CityMasterController.getCityDetails()");
-		List<CityBean> ctymst = cityService.getCityDetails();
+		List<CityBean> ctymst = cityRepository.findAllActiveCites();
 		System.out.print(ctymst);
 		if (ctymst.isEmpty()) {
 			throw new ResourceNotFoundException("Record Not Found");
@@ -84,20 +83,18 @@ public class CityController {
 	@ApiOperation(value = "add new City Details.", notes = "Returns the  ResponseMessage  in body.")
 	@DeleteMapping("/citymst/{cityId}/deletecity")
 	public void deleteCity(@PathVariable("cityId") Integer cityId) {
-		Optional<CityMaster> citymaster = cityService.findOne(cityId);
-		if (!citymaster.isPresent()) {
+		Optional<CityMaster> citymaster = cityRepository.findById(cityId);
+		if (!citymaster.isPresent()) 
 			throw new RuntimeException("stateId is not found" + cityId);
-		}
 		CityMaster ctyMst = citymaster.get();
-		cityService.deleteCity(ctyMst);
+		cityRepository.delete(ctyMst);
 	}
 	@ApiOperation(value = "a returns states.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/citymst/getstate")
 	public List<CommonDropdown> findAllState(){
-		List<CommonDropdown> sttmst = stateService.findAllStates();
-		if (sttmst.isEmpty()) {
+		List<CommonDropdown> sttmst =  stateRepo.getStates();
+		if (sttmst.isEmpty()) 
 			throw new ResourceNotFoundException("Record Not Found");
-		}
 		return sttmst;
 	}
 	

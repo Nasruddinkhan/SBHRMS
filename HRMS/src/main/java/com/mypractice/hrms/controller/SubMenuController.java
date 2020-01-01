@@ -22,10 +22,10 @@ import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.Menus;
 import com.mypractice.hrms.model.SubMenus;
 import com.mypractice.hrms.model.UserRole;
-import com.mypractice.hrms.service.MenuService;
+import com.mypractice.hrms.repository.MenuRepo;
+import com.mypractice.hrms.repository.SubMenuRepo;
+import com.mypractice.hrms.repository.UserRoleRepo;
 import com.mypractice.hrms.service.SubMenuDetails;
-import com.mypractice.hrms.service.SubMenuService;
-import com.mypractice.hrms.service.UserRoleService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -36,39 +36,40 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/hrms/api/")
 public final class SubMenuController {
 	@Autowired
-	private MenuService menuService;
+	private MenuRepo menuRepo;
 	@Autowired
-	private SubMenuService subMenuService;
-    @Autowired
-    private UserRoleService userRoleService;
-	
+	private SubMenuRepo subMenuRepo;
+	@Autowired
+	private UserRoleRepo userRoleRepo;
+
 	@ApiOperation(value = "add new sub menu manster.", notes = "Returns the  ResponseMessage  in body.")
 	@PostMapping("/submenu/{menuID}/{roleID}/savesubmenus")
-	public ResponseEntity<?> saveSubMenu( @RequestBody SubMenus subMenus, @PathVariable("menuID") Integer menuID, @PathVariable Integer roleID) {
-		Optional<Menus> menus = menuService.findOne(menuID);
-		if(!menus.isPresent())
-			throw new ResourceNotFoundException("menu is not found ="+menuID);
-		Optional<UserRole> userRole= userRoleService.findOne(roleID);
-		if(!userRole.isPresent())
-			throw new ResourceNotFoundException("roleID is not found ="+roleID);
+	public ResponseEntity<?> saveSubMenu(@RequestBody SubMenus subMenus, @PathVariable("menuID") Integer menuID,
+			@PathVariable Integer roleID) {
+		Optional<Menus> menus = menuRepo.findById(menuID);
+		if (!menus.isPresent())
+			throw new ResourceNotFoundException("menu is not found =" + menuID);
+		Optional<UserRole> userRole = userRoleRepo.findById(roleID);
+		if (!userRole.isPresent())
+			throw new ResourceNotFoundException("roleID is not found =" + roleID);
 		subMenus.setMenu(menus.get());
 		subMenus.setUseRole(userRole.get());
-		SubMenus sub = subMenuService.save(subMenus);
+		SubMenus sub = subMenuRepo.save(subMenus);
 		URI uriLocation = ServletUriComponentsBuilder.fromCurrentRequest().path("/{subMenuId}")
 				.buildAndExpand(sub.getSubMenuId()).toUri();
 		return ResponseEntity.created(uriLocation).build();
 	}
+
 	@ApiOperation(value = "add new sub menu manster.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/submenu/submenus")
-	public List<SubMenuDetails> findAll(){
-		return subMenuService.findAll();
+	public List<SubMenuDetails> findAll() {
+		return subMenuRepo.getSubMenuDetails();
 	}
-	
+
 	@ApiOperation(value = "add new sub menu manster.", notes = "Returns the  ResponseMessage  in body.")
 	@DeleteMapping("/submenu/{subMenuId}/delete")
-	public void deleteSubMenu(@PathVariable String subMenuId){
-		String submenID = subMenuId.replaceAll("-","/");
-		System.out.println(submenID);
-		subMenuService.deleteSubMenu(submenID);
+	public void deleteSubMenu(@PathVariable String subMenuId) {
+		String submenID = subMenuId.replaceAll("-", "/");
+		subMenuRepo.deleteSubmenu(submenID);
 	}
 }
