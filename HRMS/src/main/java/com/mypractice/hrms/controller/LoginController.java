@@ -93,6 +93,7 @@ public class LoginController {
 						drop.setCode(o.getSubMenuName());
 						return drop;
 					}).collect(Collectors.toList());
+				accessMenus.forEach(s-> System.out.println(s));
 				acceessMenu.put("menus", accessMenus);
 				msg.setMap(acceessMenu);
 				msg.setUser(details);
