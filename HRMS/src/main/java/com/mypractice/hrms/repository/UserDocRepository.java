@@ -1,7 +1,7 @@
 /**
  * nasru
- * EducationRepository.java
- * Dec 30, 2019
+ * UserDocRepository.java
+ * Jan 12, 2020
  */
 package com.mypractice.hrms.repository;
 
@@ -9,18 +9,19 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.mypractice.hrms.model.Education;
 import com.mypractice.hrms.model.User;
+import com.mypractice.hrms.model.UserDocument;
 
 /**
  * @author nasru
  *
  */
-public interface EducationRepository extends JpaRepository<Education, Integer> {
+public interface UserDocRepository extends JpaRepository<UserDocument, Integer> {
 
 	/**
 	 * @param user
+	 * @return
 	 */
-	List<Education> findByuser(User user);
+	List<UserDocument> findByuser(User user);
 
 }

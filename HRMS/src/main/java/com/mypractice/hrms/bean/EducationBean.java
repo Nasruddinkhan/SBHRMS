@@ -19,6 +19,20 @@ public class EducationBean {
 	private String  universityID;
 	private String  univercityName;
 	private String  comments;
+	private Double percentage;
+	
+	/**
+	 * @return the percentage
+	 */
+	public Double getPercentage() {
+		return percentage;
+	}
+	/**
+	 * @param percentage the percentage to set
+	 */
+	public void setPercentage(Double percentage) {
+		this.percentage = percentage;
+	}
 	/**
 	 * @return the educationID
 	 */

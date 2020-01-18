@@ -90,6 +90,7 @@ public class EducationController {
 			bean.setUniversityID(obj.getUniversityMst().getUniversityID());
 			bean.setUnivercityName(obj.getUniversityMst().getUnivercityName());
 			bean.setCollegeName(obj.getCollegeName());
+			bean.setPercentage(obj.getPercentage());
 			bean.setFromDate(obj.getFromDate());
 			bean.setToDate(obj.getToDate());
 			bean.setComments(obj.getComments());

@@ -44,6 +44,9 @@ public class Education extends BaseBean implements Serializable{
 	private String toDate;
 	@Column(name = "COLLEGE_NAME", length = 100)
 	private String collegeName;
+	@Column(name = "PERCENTAGE")
+	private Double percentage;
+	
 	@OneToOne(fetch = FetchType.LAZY )
     @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name="FK_EDUCATION_USER_ID"))
 	@JsonIgnore
@@ -59,6 +62,18 @@ public class Education extends BaseBean implements Serializable{
 	@Column(name = "COMMENTS", length = 200)
 	private String comments;
 	
+	/**
+	 * @return the percentage
+	 */
+	public Double getPercentage() {
+		return percentage;
+	}
+	/**
+	 * @param percentage the percentage to set
+	 */
+	public void setPercentage(Double percentage) {
+		this.percentage = percentage;
+	}
 	/**
 	 * @return the comments
 	 */

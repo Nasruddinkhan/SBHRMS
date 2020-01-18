@@ -91,7 +91,7 @@ public final class User implements Serializable {
 	@Column(name = "PAN_CARD",  columnDefinition = CommonUtils.VARCHAR_15)
 	private String panCard;
 
-	@JsonIgnore
+	//@JsonIgnore
 	@Column(name = "PASSWORD", columnDefinition = CommonUtils.VARCHAR_20 )
 	private String password;
 

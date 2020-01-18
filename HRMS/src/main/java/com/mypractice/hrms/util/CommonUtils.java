@@ -1,9 +1,16 @@
 package com.mypractice.hrms.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * Nasruddin khan
@@ -25,7 +32,8 @@ public interface CommonUtils {
 	public static final String JOB_TIME = "0 0/1 * 1/1 * ?";
 	public static final String CHAR_01_DFLT = "char(1) default 'N' ";
 	public static final String INIT_VECTOR = "RandomInitVector";
-	public static final String KEY = "Hrms12345JSOFT12345";
+	public static final String KEY = "Hrms12345HRMS12345";
+	public static final String DIRECTORY="D:\\Application_Logs\\files";
 	public static String encrypt(String key, String initVector, String value) {
 		try {
 			IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
@@ -54,4 +62,51 @@ public interface CommonUtils {
         }
         return null;
     }
+	public static String writeFileOnDisk( String enCodeString, String fileName) {
+		System.out.println(enCodeString);
+		try ( FileOutputStream fos = new FileOutputStream( new File(DIRECTORY+"\\"+fileName)); ) {
+			byte[] decoder = Base64.getDecoder().decode(enCodeString);
+			fos.write(decoder);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return DIRECTORY;
+	}
+
+	/**
+	 * @param string
+	 * @return
+	 */
+	public static String readFileOnDisk(String fileName) {
+		// TODO Auto-generated method stub
+		String encodeFile = "";
+		try {
+			System.out.println(DIRECTORY+"\\"+fileName);
+			encodeFile = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray( new File(DIRECTORY+"\\"+fileName)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			encodeFile="file is mising please delete this and re upload";
+		}
+		return encodeFile;
+	}
+
+	/**
+	 * @param string
+	 */
+	public static void deleFileOnDisk(String fileName) {
+		// TODO Auto-generated method stub
+		 File file= new File(DIRECTORY+"\\"+fileName);
+		 if(!file.exists())
+			 throw new RuntimeException("File is not present");
+		 file.delete();
+	}
+	
+	public static boolean checkFileOnDisk(String checkfile) {
+		// TODO Auto-generated method stub
+		 return new File(DIRECTORY+"\\"+checkfile).exists();
+	}
+	public static void main(String[] args) {
+		System.out.println(CommonUtils.encrypt(CommonUtils.KEY, CommonUtils.INIT_VECTOR, "password"));
+	}
 }

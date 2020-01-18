@@ -25,7 +25,7 @@ public class HRMSApplication {
 		//	System.out.println(Base64.getEncoder().encode("zaid"));
 			//System.out.println(Base64.getDecoder().decode(Base64.getEncoder().encodeToString("zaid".getBytes())));
 
-			/*
+			/*vdg
 			 * emailRepo.getTemplates().forEach(obj->{ System.out.println(obj+
 			 * " \n "+obj.getEmailTemplates()); });
 			 */

@@ -31,10 +31,7 @@
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	@Override
-	public String toString() {
-		return "DropDownBean [id=" + id + ", code=" + code + "]";
-	}
+	
 	
 	 
 }
