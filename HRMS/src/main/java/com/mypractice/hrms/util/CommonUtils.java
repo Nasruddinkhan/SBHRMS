@@ -32,7 +32,7 @@ public interface CommonUtils {
 	public static final String JOB_TIME = "0 0/1 * 1/1 * ?";
 	public static final String CHAR_01_DFLT = "char(1) default 'N' ";
 	public static final String INIT_VECTOR = "RandomInitVector";
-	public static final String KEY = "Hrms12345HRMS12345";
+	public static final String KEY = "Nkhan";
 	public static final String DIRECTORY="D:\\Application_Logs\\files";
 	public static String encrypt(String key, String initVector, String value) {
 		try {
@@ -91,6 +91,18 @@ public interface CommonUtils {
 		return encodeFile;
 	}
 
+	public static String readAndEncodeFile(String fileName) {
+		// TODO Auto-generated method stub
+		String encodeFile = "";
+		try {
+			encodeFile = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray( new File(fileName)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			encodeFile="file is mising please delete this and re upload";
+		}
+		return encodeFile;
+	}
 	/**
 	 * @param string
 	 */
@@ -109,4 +121,6 @@ public interface CommonUtils {
 	public static void main(String[] args) {
 		System.out.println(CommonUtils.encrypt(CommonUtils.KEY, CommonUtils.INIT_VECTOR, "password"));
 	}
+
+
 }

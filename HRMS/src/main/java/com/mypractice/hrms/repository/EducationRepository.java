@@ -23,4 +23,6 @@ public interface EducationRepository extends JpaRepository<Education, Integer> {
 	 */
 	List<Education> findByuser(User user);
 
+	
+
 }

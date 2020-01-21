@@ -24,6 +24,46 @@ public class UserBean {
 	private String aadhaarno;
 	private String  pancard;
 	private String isPersonalFlag;
+	private String refererName;
+	private String refererEmail;
+	private String refererContact;
+	
+	/**
+	 * @return the refererName
+	 */
+	public String getRefererName() {
+		return refererName;
+	}
+	/**
+	 * @return the refererEmail
+	 */
+	public String getRefererEmail() {
+		return refererEmail;
+	}
+	/**
+	 * @return the refererContact
+	 */
+	public String getRefererContact() {
+		return refererContact;
+	}
+	/**
+	 * @param refererName the refererName to set
+	 */
+	public void setRefererName(String refererName) {
+		this.refererName = refererName;
+	}
+	/**
+	 * @param refererEmail the refererEmail to set
+	 */
+	public void setRefererEmail(String refererEmail) {
+		this.refererEmail = refererEmail;
+	}
+	/**
+	 * @param refererContact the refererContact to set
+	 */
+	public void setRefererContact(String refererContact) {
+		this.refererContact = refererContact;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -102,6 +142,15 @@ public class UserBean {
 	public void setIsPersonalFlag(String isPersonalFlag) {
 		this.isPersonalFlag = isPersonalFlag;
 	}
+	@Override
+	public String toString() {
+		return "UserBean [firstName=" + firstName + ", lastName=" + lastName + ", fatherName=" + fatherName
+				+ ", gender=" + gender + ", dob=" + dob + ", maritial=" + maritial + ", doj=" + doj + ", email=" + email
+				+ ", contactno=" + contactno + ", guardian=" + guardian + ", aadhaarno=" + aadhaarno + ", pancard="
+				+ pancard + ", isPersonalFlag=" + isPersonalFlag + ", refererName=" + refererName + ", refererEmail="
+				+ refererEmail + ", refererContact=" + refererContact + "]";
+	}
+	
 }
 
  

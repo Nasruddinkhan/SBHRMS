@@ -75,11 +75,33 @@ public class EducationController {
 				.path("/{educationID}")
 				.buildAndExpand(edu.getEducationID()).toUri()).build();
 	}
-
 	@ApiOperation(value = "add new education Details.", notes = "Returns the  ResponseMessage  in body.")
 	@GetMapping("/education/geteducations")
 	public ResponseEntity<?> getEducationDetails() {
 		List<Education> educations = educationRepository.findAll();
+		if (educations.isEmpty())
+			throw new ResourceNotFoundException("Record Not Found");
+		return ResponseEntity.ok(educations.stream().map((Function<? super Education,? extends EducationBean>)obj->{
+			EducationBean bean = new EducationBean();
+			bean.setEducationID(obj.getEducationID());
+			bean.setCourseID(obj.getEducationMst().getCourseID());
+			bean.setCourseName(obj.getEducationMst().getCourseName());
+			bean.setUniversityID(obj.getUniversityMst().getUniversityID());
+			bean.setUnivercityName(obj.getUniversityMst().getUnivercityName());
+			bean.setCollegeName(obj.getCollegeName());
+			bean.setPercentage(obj.getPercentage());
+			bean.setFromDate(obj.getFromDate());
+			bean.setToDate(obj.getToDate());
+			bean.setComments(obj.getComments());
+			return bean;
+		}).collect(Collectors.toList()));
+	}
+	
+	@ApiOperation(value = "add new education Details.", notes = "Returns the  ResponseMessage  in body.")
+	@GetMapping("/education/{userID}/geteducations")
+	public ResponseEntity<?> getEducationDetails(@PathVariable Integer userID) {
+		User user =	userRepository.findByuserID(userID);
+		List<Education> educations = educationRepository.findByuser(user);
 		if (educations.isEmpty())
 			throw new ResourceNotFoundException("Record Not Found");
 		return ResponseEntity.ok(educations.stream().map((Function<? super Education,? extends EducationBean>)obj->{

@@ -19,7 +19,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mypractice.hrms.util.CommonUtils;
 
@@ -104,23 +103,45 @@ public final class User implements Serializable {
 
 	@Column(name = "IS_PERSONAL_FLAG", columnDefinition = CommonUtils.CHAR_01_DFLT)
 	private String isPersonalFlag;
+	@Column(name = "REFERER_NAME" , length = 30)
+	private String refererName;
+	@Column(name = "REFERER_EMAIL" , length = 50)
+	private String refererEmail;
+	@Column(name = "REFERER_CONTACT" , length = 15)
+	private String refererContact;
 	
-	public String getIsPersonalFlag() {
-		return isPersonalFlag;
-	}
-	public void setIsPersonalFlag(String isPersonalFlag) {
-		this.isPersonalFlag = isPersonalFlag;
-	}
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public User(Integer userID, String firstName,  String lastName,
+	/**
+	 * @param userID
+	 * @param statusMaster
+	 * @param userRole
+	 * @param firstName
+	 * @param lastName
+	 * @param fatherName
+	 * @param gender
+	 * @param dob
+	 * @param maritialStatus
+	 * @param doj
+	 * @param email
+	 * @param contactNo
+	 * @param gurdianContactNo
+	 * @param aadhaarDetails
+	 * @param panCard
+	 * @param password
+	 * @param confPassword
+	 * @param userType
+	 * @param isPersonalFlag
+	 * @param refererName
+	 * @param refererEmail
+	 * @param refererContact
+	 */
+	public User(Integer userID, StatusMaster statusMaster, UserRole userRole, String firstName, String lastName,
 			String fatherName, String gender, Date dob, String maritialStatus, Date doj, String email, String contactNo,
 			String gurdianContactNo, String aadhaarDetails, String panCard, String password, String confPassword,
-			String userType) {
+			String userType, String isPersonalFlag, String refererName, String refererEmail, String refererContact) {
 		super();
 		this.userID = userID;
+		this.statusMaster = statusMaster;
+		this.userRole = userRole;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.fatherName = fatherName;
@@ -136,6 +157,62 @@ public final class User implements Serializable {
 		this.password = password;
 		this.confPassword = confPassword;
 		this.userType = userType;
+		this.isPersonalFlag = isPersonalFlag;
+		this.refererName = refererName;
+		this.refererEmail = refererEmail;
+		this.refererContact = refererContact;
+	}
+	
+	/**
+	 * 
+	 */
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getIsPersonalFlag() {
+		return isPersonalFlag;
+	}
+	public void setIsPersonalFlag(String isPersonalFlag) {
+		this.isPersonalFlag = isPersonalFlag;
+	}
+	
+	/**
+	 * @return the refererName
+	 */
+	public String getRefererName() {
+		return refererName;
+	}
+	/**
+	 * @return the refererEmail
+	 */
+	public String getRefererEmail() {
+		return refererEmail;
+	}
+	/**
+	 * @return the refererContact
+	 */
+	public String getRefererContact() {
+		return refererContact;
+	}
+	/**
+	 * @param refererName the refererName to set
+	 */
+	public void setRefererName(String refererName) {
+		this.refererName = refererName;
+	}
+	/**
+	 * @param refererEmail the refererEmail to set
+	 */
+	public void setRefererEmail(String refererEmail) {
+		this.refererEmail = refererEmail;
+	}
+	/**
+	 * @param refererContact the refererContact to set
+	 */
+	public void setRefererContact(String refererContact) {
+		this.refererContact = refererContact;
 	}
 	public String getUserType() {
 		return userType;
@@ -252,14 +329,18 @@ public final class User implements Serializable {
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
+
 	@Override
 	public String toString() {
-		return "User [userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", fatherName="
-				+ fatherName + ", gender=" + gender + ", dob=" + dob + ", maritialStatus=" + maritialStatus + ", doj="
-				+ doj + ", email=" + email + ", contactNo=" + contactNo + ", gurdianContactNo=" + gurdianContactNo
-				+ ", aadhaarDetails=" + aadhaarDetails + ", panCard=" + panCard + ", password=" + password
-				+ ", confPassword=" + confPassword + "]";
+		return "User [userID=" + userID + ", statusMaster=" + statusMaster + ", userRole=" + userRole + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", fatherName=" + fatherName + ", gender=" + gender + ", dob="
+				+ dob + ", maritialStatus=" + maritialStatus + ", doj=" + doj + ", email=" + email + ", contactNo="
+				+ contactNo + ", gurdianContactNo=" + gurdianContactNo + ", aadhaarDetails=" + aadhaarDetails
+				+ ", panCard=" + panCard + ", password=" + password + ", confPassword=" + confPassword + ", userType="
+				+ userType + ", isPersonalFlag=" + isPersonalFlag + ", refererName=" + refererName + ", refererEmail="
+				+ refererEmail + ", refererContact=" + refererContact + "]";
 	}
+
 }
 
  

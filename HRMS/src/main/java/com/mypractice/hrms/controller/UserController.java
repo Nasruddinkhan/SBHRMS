@@ -141,6 +141,9 @@ public class UserController {
 		user.setAadhaarDetails(userBean.getAadhaarno());
 		user.setPanCard(userBean.getPancard());
 		user.setIsPersonalFlag(userBean.getIsPersonalFlag());
+		user.setRefererName(userBean.getRefererName());
+		user.setRefererEmail(userBean.getRefererEmail());
+		user.setRefererContact(userBean.getRefererContact());
 		user = userService.registerUser(user);
 		if(null == user)
 			throw new RuntimeException("Internal error");
