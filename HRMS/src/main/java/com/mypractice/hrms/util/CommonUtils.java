@@ -3,7 +3,11 @@ package com.mypractice.hrms.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Base64;
+import java.util.function.Function;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -90,7 +94,22 @@ public interface CommonUtils {
 		}
 		return encodeFile;
 	}
+	Function<Long, String> attendsFunc= s-> s==0?"00":s.toString().length() == 1?"0"+s:s.toString();
+	public static LocalTime getTimeDiffrent(LocalDateTime fromTemp, LocalDateTime to) {
+		// TODO Auto-generated method stub
 
+	        long hours = fromTemp.until(to, ChronoUnit.HOURS);
+	        fromTemp = fromTemp.plusHours(hours);
+
+	        long minutes = fromTemp.until(to, ChronoUnit.MINUTES);
+	        fromTemp = fromTemp.plusMinutes(minutes);
+
+	        long seconds = fromTemp.until(to, ChronoUnit.SECONDS);
+	        fromTemp = fromTemp.plusSeconds(seconds);
+	        StringBuffer sb = new StringBuffer();
+	        sb.append(attendsFunc.apply(hours)).append(":").append(attendsFunc.apply(minutes)).append(":").append(attendsFunc.apply(seconds));
+		return LocalTime.parse(sb.toString());
+	}
 	public static String readAndEncodeFile(String fileName) {
 		// TODO Auto-generated method stub
 		String encodeFile = "";
