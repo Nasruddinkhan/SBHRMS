@@ -30,12 +30,13 @@ import com.mypractice.hrms.exception.ResourceNotFoundException;
 import com.mypractice.hrms.model.SkillMaster;
 import com.mypractice.hrms.repository.SkillRepository;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
  * @author Nasruddin Khan 28-May-2019 - 1:32:48 am SkillMasterController.java
  */
-@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/hrms/api/")
 public class SkillMasterController {
@@ -77,6 +78,9 @@ public class SkillMasterController {
 		}
 		return sklmst;
 	}
+	@ApiImplicitParams({
+	    @ApiImplicitParam(name = "Authorization", value = "Authorization token", 
+	                      required = true, dataType = "string", paramType = "header") })
 	@ApiOperation(value = "add new Skill Details.", notes = "Returns the  ResponseMessage  in body.")
 	@DeleteMapping("/skillmaster/{skillId}/deleteskill")
 	public void deleteSkill(@PathVariable("skillId") Integer skillId) {

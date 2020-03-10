@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
  */
  @RestController
  @RequestMapping("/hrms/api/")
-public final class MenuController {
+public class MenuController {
 	 @Autowired
 	 private MenuRepo menuRepo;
 	 @ApiOperation(value = "add new menu Details.", notes = "Returns the  ResponseMessage  in body.")

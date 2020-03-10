@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/hrms/api/")
-public final class SearchEmployeeController {
+public  class SearchEmployeeController {
 	@Autowired
 	private  UserRepository userRepository;
 	@ApiOperation(value="find all users",  notes = "return all user list")

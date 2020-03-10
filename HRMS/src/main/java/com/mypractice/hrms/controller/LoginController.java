@@ -86,7 +86,6 @@ public class LoginController {
 		// TODO Auto-generated method stub
 		User details = userRepository.findUserByEmailID(loginBO.getUsername());
 		List<DropDownBean> accessMenus = null;
-		Predicate<User> check = u -> u != null;
 			Predicate<String> checkStatus = s -> approved.intern() == s.intern();
 			System.out.println(details.getStatusMaster().getStatusID() + " " + approved);
 			if (checkStatus.test(details.getStatusMaster().getStatusID())) {

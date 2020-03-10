@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/hrms/api/")
-public final class SubMenuController {
+public class SubMenuController {
 	@Autowired
 	private MenuRepo menuRepo;
 	@Autowired
