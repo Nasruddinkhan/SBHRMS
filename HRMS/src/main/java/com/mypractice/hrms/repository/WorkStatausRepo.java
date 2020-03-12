@@ -29,15 +29,15 @@ public interface WorkStatausRepo extends JpaRepository<WorkStataus, Integer> {
 	 * @param startTime
 	 * @param endTime
 	 */
-	@Query("from WorkStataus where endTime between :STARTTIME AND  :ENDTIME ")
-	List<WorkStataus> findByendTime(@Param("STARTTIME")Timestamp startTime, @Param("ENDTIME")Timestamp endTime);
+	//@Query("from WorkStataus where endTime between :STARTTIME AND  :ENDTIME ")
+	//List<WorkStataus> findByendTime(@Param("STARTTIME")Timestamp startTime, @Param("ENDTIME")Timestamp endTime);
 
 	/**
 	 * @param startTime
 	 * @param endTime
 	 * @return
 	 */
-	@Query("from WorkStataus where startTime between :STARTTIME AND  :ENDTIME ")
+	@Query("from WorkStataus where startTime <= :ENDTIME   AND  endTime>= :STARTTIME")
 	List<WorkStataus> findBystartTime(@Param("STARTTIME")Timestamp startTime, @Param("ENDTIME")Timestamp endTime);
 
 	/**

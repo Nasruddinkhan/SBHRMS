@@ -7,6 +7,7 @@ package com.mypractice.hrms.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,8 +59,8 @@ public class WorkStatausController {
 			@PathVariable Integer userID) {
 		System.out.println(workStataus);
 		List<WorkStataus> workList =workStsRepo.findBystartTime(workStataus.getStartTime(), workStataus.getEndTime());
-		List<WorkStataus> works =workStsRepo.findByendTime(workStataus.getStartTime(), workStataus.getEndTime());
-		if(!workList.isEmpty() || !works.isEmpty())
+		//List<WorkStataus> works =workStsRepo.findByendTime(workStataus.getStartTime(), workStataus.getEndTime());
+		if(!workList.isEmpty())
 			throw new RuntimeException("Strat Tme and end time is overlap");
 		workStataus.setSkillMst(skillRepo.findById(skillID).get());
 		workStataus.setSkillElementMst(skillElementRepo.findById(skillEleID).get());
@@ -77,6 +79,15 @@ public class WorkStatausController {
 		Page<WorkStataus>  pageWorks = workStsRepo.findAllByuser(userRepo.findById(userID).get(), firstPageWithTwoElements);
 		pageWorks.map(s-> setValues(s));
 		return pageWorks;
+	}
+	
+	@DeleteMapping("workStataus/{workStatusID}/deleteremarks")
+	public void deleteWorkStatus(@PathVariable Integer workStatusID ){
+	
+	 Optional<WorkStataus> workStatus=	 workStsRepo.findById(workStatusID); 
+	 if(!workStatus.isPresent())
+		 throw new RuntimeException("record not found");
+	 workStsRepo.delete(workStatus.get());
 	}
 	/**
 	 * @param s
