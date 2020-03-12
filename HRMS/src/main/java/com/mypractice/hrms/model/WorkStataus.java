@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -60,6 +61,35 @@ public class WorkStataus implements Serializable{
 	private SkillElementMaster skillElementMst;
 	@Column(name = "REMARKS", length = 800)
 	private String remarks;
+	@Transient
+	private String skillName;
+	@Transient
+	private String skillElementName;
+	
+	/**
+	 * @return the skillName
+	 */
+	public String getSkillName() {
+		return skillName;
+	}
+	/**
+	 * @return the skillElementName
+	 */
+	public String getSkillElementName() {
+		return skillElementName;
+	}
+	/**
+	 * @param skillName the skillName to set
+	 */
+	public void setSkillName(String skillName) {
+		this.skillName = skillName;
+	}
+	/**
+	 * @param skillElementName the skillElementName to set
+	 */
+	public void setSkillElementName(String skillElementName) {
+		this.skillElementName = skillElementName;
+	}
 	/**
 	 * @return the workStatusID
 	 */
